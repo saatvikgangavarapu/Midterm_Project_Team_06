@@ -5,6 +5,7 @@
  */
 package UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp;
 
+import Business.Business;
 import Business.UserAccounts.UserAccount;
 import javax.swing.JPanel;
 
@@ -14,21 +15,50 @@ import javax.swing.JPanel;
  */
 
 public class AdminUserAccount extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form ManageSuppliersJPanel
      */
     JPanel CardSequencePanel;
 
     UserAccount selecteduseraccount;
+    Business business;
+    ManageUserAccountsJPanel managePanel;
 
-    public AdminUserAccount(UserAccount sua, JPanel jp) {
+    public AdminUserAccount(Business business, UserAccount sua, JPanel jp, ManageUserAccountsJPanel managePane) {
+        this.CardSequencePanel = jp;
+        this.selecteduseraccount = sua;
+        this.business = business;
+        this.managePanel = managePanel;
 
-        CardSequencePanel = jp;
-        selecteduseraccount= sua;
         initComponents();
+        populateFields();
+    }
         //display user details here
 
+    private void populateFields() {
+        if (selecteduseraccount == null) {
+            txtPerson.setText("");
+            txtUsername.setText("");
+            txtPassword.setText("");
+            cmbRole.setSelectedIndex(-1);
+            txtPerson.setEditable(true);
+            txtUsername.setEditable(true);
+            txtPassword.setEditable(true);
+            cmbRole.setEnabled(true);
+            btnUpdate.setText("Create >>");
+            return;
+        }
+        txtPerson.setText(selecteduseraccount.getPersonId());
+        txtUsername.setText(selecteduseraccount.getUserLoginName());
+        cmbRole.setSelectedItem(selecteduseraccount.getRole());
+        
+        txtPassword.setText("");
+        txtPerson.setEditable(true);
+        cmbRole.setEnabled(true);
+        txtUsername.setEditable(true);
+        txtPassword.setEditable(true);
+        btnUpdate.setText("Update >>");
     }
 
     /**
@@ -40,58 +70,137 @@ public class AdminUserAccount extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Back = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        Back1 = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JTextField();
+        txtPerson = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JTextField();
+        cmbRole = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
 
-        Back.setText("Update>>");
-        Back.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setText("Update>>");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackActionPerformed(evt);
+                btnUpdateActionPerformed(evt);
             }
         });
-        add(Back);
-        Back.setBounds(480, 290, 100, 32);
+        add(btnUpdate);
+        btnUpdate.setBounds(480, 290, 100, 23);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel2.setText("Administer User Account");
         add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 29);
+        jLabel2.setBounds(21, 20, 550, 28);
 
-        Back1.setText("<< Back");
-        Back1.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setText("<< Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Back1ActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
-        add(Back1);
-        Back1.setBounds(40, 290, 100, 32);
+        add(btnBack);
+        btnBack.setBounds(40, 290, 100, 23);
+
+        jLabel1.setText("Person");
+        add(jLabel1);
+        jLabel1.setBounds(150, 110, 50, 17);
+
+        jLabel3.setText("Username");
+        add(jLabel3);
+        jLabel3.setBounds(140, 180, 80, 20);
+
+        jLabel4.setText("Password");
+        add(jLabel4);
+        jLabel4.setBounds(140, 220, 80, 17);
+
+        jLabel5.setText("Role");
+        add(jLabel5);
+        jLabel5.setBounds(170, 150, 30, 17);
+
+        txtPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordActionPerformed(evt);
+            }
+        });
+        add(txtPassword);
+        txtPassword.setBounds(250, 220, 130, 23);
+
+        txtPerson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPersonActionPerformed(evt);
+            }
+        });
+        add(txtPerson);
+        txtPerson.setBounds(250, 100, 130, 23);
+
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsernameActionPerformed(evt);
+            }
+        });
+        add(txtUsername);
+        txtUsername.setBounds(250, 180, 130, 23);
+
+        cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Faculty", "Student" }));
+        cmbRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbRoleActionPerformed(evt);
+            }
+        });
+        add(cmbRole);
+        cmbRole.setBounds(250, 140, 130, 23);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-
         CardSequencePanel.remove(this);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
-    }//GEN-LAST:event_BackActionPerformed
-
-    private void Back1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back1ActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
          CardSequencePanel.remove(this);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
 
-    }//GEN-LAST:event_Back1ActionPerformed
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordActionPerformed
+
+    private void txtPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPersonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPersonActionPerformed
+
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsernameActionPerformed
+
+    private void cmbRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRoleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbRoleActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Back;
-    private javax.swing.JButton Back1;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cmbRole;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField txtPassword;
+    private javax.swing.JTextField txtPerson;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
 }
