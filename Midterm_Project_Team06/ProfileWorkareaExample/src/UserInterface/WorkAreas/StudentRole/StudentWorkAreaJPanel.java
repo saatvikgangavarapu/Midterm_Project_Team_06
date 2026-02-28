@@ -12,6 +12,12 @@ package UserInterface.WorkAreas.StudentRole;
 
 import Business.Business;
 import Business.Profiles.StudentProfile;
+import UserInterface.WorkAreas.StudentRole.StudentPanels.GraduationAuditJPanel;
+import UserInterface.WorkAreas.StudentRole.StudentPanels.ManageCourseWorkJPanel;
+import UserInterface.WorkAreas.StudentRole.StudentPanels.ManageProfileJPanel;
+import UserInterface.WorkAreas.StudentRole.StudentPanels.RegistrationJPanel;
+import UserInterface.WorkAreas.StudentRole.StudentPanels.TranscriptJPanel;
+import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 /**
@@ -20,24 +26,24 @@ import javax.swing.JPanel;
  */
 public class StudentWorkAreaJPanel extends javax.swing.JPanel {
 
-    javax.swing.JPanel CardSequencePanel;
     Business business;
     StudentProfile student;
+    JPanel CardSequencePanel;
 
     /**
      * Creates new form UnitRiskWorkArea
+     *
      * @param b
      * @param spp
      * @param clp
      */
 
-    public StudentWorkAreaJPanel(Business b, StudentProfile spp, JPanel clp) {
+    public StudentWorkAreaJPanel(Business business, StudentProfile student, JPanel CardSequencePanel) {
 
-        business = b;
-        this.CardSequencePanel = clp;
-        student = spp;
         initComponents();
-
+        this.business = business;
+        this.CardSequencePanel = CardSequencePanel;
+        this.student = student;
     }
 
     /**
@@ -170,31 +176,49 @@ public class StudentWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCourseWorkIdentifyResourceAssetsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCourseWorkIdentifyResourceAssetsActionPerformed
-        
 
+        ManageCourseWorkJPanel mcwp = new ManageCourseWorkJPanel(business, student, CardSequencePanel);
+        CardSequencePanel.add("ManageCourseWorkJPanel", mcwp);
+        CardLayout layout = (CardLayout)CardSequencePanel.getLayout();
+        layout.next(CardSequencePanel);
     }//GEN-LAST:event_btnCourseWorkIdentifyResourceAssetsActionPerformed
 
     private void btnManageProfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageProfilActionPerformed
         // TODO add your handling code here:
 
-
-
+        ManageProfileJPanel mpp = new ManageProfileJPanel(business, student, CardSequencePanel);
+        CardSequencePanel.add("ManageProfileJPanel", mpp);
+        CardLayout layout = (CardLayout)CardSequencePanel.getLayout();
+        layout.next(CardSequencePanel);
 }//GEN-LAST:event_btnManageProfilActionPerformed
 
     private void btnGrduationAuditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrduationAuditActionPerformed
         // TODO add your handling code here:
 
-
+        GraduationAuditJPanel gap = new GraduationAuditJPanel(business, student, CardSequencePanel);
+        CardSequencePanel.add("GraduationAuditJPanel", gap);
+        CardLayout layout = (CardLayout)CardSequencePanel.getLayout();
+        layout.next(CardSequencePanel);
     }//GEN-LAST:event_btnGrduationAuditActionPerformed
 
     private void btnRegistrationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrationActionPerformed
         // TODO add your handling code here:
+        
+        RegistrationJPanel rp = new RegistrationJPanel(business, student, CardSequencePanel);
+        CardSequencePanel.add("RegistrationJPanel", rp);
+        CardLayout layout = (CardLayout)CardSequencePanel.getLayout();
+        layout.next(CardSequencePanel);
 
-        CardSequencePanel.removeAll();
+        
 }//GEN-LAST:event_btnRegistrationActionPerformed
 
     private void btnTranscriptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTranscriptActionPerformed
         // TODO add your handling code here:
+        
+        TranscriptJPanel tp = new TranscriptJPanel(business, student, CardSequencePanel);
+        CardSequencePanel.add("TranscriptJPanel", tp);
+        CardLayout layout = (CardLayout)CardSequencePanel.getLayout();
+        layout.next(CardSequencePanel);
     }//GEN-LAST:event_btnTranscriptActionPerformed
 
 
