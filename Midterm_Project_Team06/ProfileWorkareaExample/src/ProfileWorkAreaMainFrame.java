@@ -17,6 +17,8 @@ import UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
 import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 import javax.swing.JPanel;
 
+import Business.Profiles.FacultyProfile;
+
 /**
  *
  * @author kal bugrara
