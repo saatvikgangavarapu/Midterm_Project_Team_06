@@ -21,6 +21,8 @@ import Business.Person.PersonDirectory;
 
 import Business.Courses.CourseDirectory;
 
+import Business.Enrollment.EnrollmentDirectory;
+import Business.Courses.Course;
 
 /**
  *
@@ -46,9 +48,15 @@ class ConfigureABusiness {
         
         Person facultyPerson = persondirectory.newPerson("Prof Burgara");
         
+        EnrollmentDirectory ed = business.getEnrollmentDirectory();
+        
         CourseDirectory cd = business.getCourseDirectory();
         cd.addACourse("INFO5100", "Application Engineering & Development" , 4, facultyPerson.getPersonId());
         cd.addACourse("INFOO7245","Agile Software Development" , 4, facultyPerson.getPersonId());
+        Course course1 = cd.getCourses().get(0);
+        Course course2 = cd.getCourses().get(1);
+        
+        
 
 // Create Admins to manage the business
         EmployeeDirectory employeedirectory = business.getEmployeeDirectory();
@@ -56,6 +64,9 @@ class ConfigureABusiness {
         
         StudentDirectory studentdirectory = business.getStudentDirectory();
         StudentProfile studentprofile0 = studentdirectory.newStudentProfile(person003);
+        
+        ed.addEnrollment(course1, studentprofile0, 97);
+        ed.addEnrollment(course2, studentprofile0, 67);
         
         FacultyProfile facultyprofile0 = new FacultyProfile(facultyPerson);
         
