@@ -6,6 +6,9 @@
 package UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp;
 
 import Business.Business;
+import UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp.AdminUserAccount;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 
 
 import javax.swing.JPanel;
@@ -44,6 +47,8 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
         Next = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        txtPerson = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -55,7 +60,7 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
             }
         });
         add(Back);
-        Back.setBounds(20, 260, 76, 32);
+        Back.setBounds(20, 260, 80, 23);
 
         Next.setText("Next >>");
         Next.addActionListener(new java.awt.event.ActionListener() {
@@ -64,34 +69,70 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
             }
         });
         add(Next);
-        Next.setBounds(500, 260, 80, 32);
+        Next.setBounds(500, 260, 80, 23);
 
         jLabel1.setText("Name");
         add(jLabel1);
-        jLabel1.setBounds(20, 60, 190, 16);
+        jLabel1.setBounds(20, 60, 190, 17);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel2.setText("Manage Personnel (HR)");
         add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 29);
+        jLabel2.setBounds(21, 20, 550, 28);
+
+        jLabel3.setText("Person ID");
+        add(jLabel3);
+        jLabel3.setBounds(180, 160, 70, 17);
+
+        txtPerson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPersonActionPerformed(evt);
+            }
+        });
+        add(txtPerson);
+        txtPerson.setBounds(260, 157, 130, 23);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
         // TODO add your handling code here:
         CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
- //       ((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
+        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
 
     }//GEN-LAST:event_BackActionPerformed
 
     private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
         // TODO add your handling code here:
-        
-        AdministerPersonJPanel mppd = new AdministerPersonJPanel(business, CardSequencePanel);
-        CardSequencePanel.add(mppd);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        String personId = txtPerson.getText().trim();
 
+        if (personId.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Person ID required.");
+            return;
+        }
+
+        if (business.getPersonDirectory().findPerson(personId) != null) {
+            JOptionPane.showMessageDialog(this, "Person ID already exists.");
+            return;
+        }
+
+        business.getPersonDirectory().newPerson(personId);
+        JOptionPane.showMessageDialog(this, "Person created.");
+        
+        
+        if (personId.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Person ID required.");
+            return;
+        }
+
+        business.getPersonDirectory().newPerson(personId);
+
+        AdminUserAccount editor = new AdminUserAccount(business, null, CardSequencePanel, null);
+        CardSequencePanel.add("AdminUserAccountCreate", editor);
+        ((CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "AdminUserAccountCreate");
     }//GEN-LAST:event_NextActionPerformed
+
+    private void txtPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPersonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPersonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -99,6 +140,8 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
     private javax.swing.JButton Next;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField txtPerson;
     // End of variables declaration//GEN-END:variables
 
 }

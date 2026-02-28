@@ -11,6 +11,7 @@ import Business.Profiles.StudentProfile;
 
 import Business.UserAccounts.UserAccount;
 import Business.UserAccounts.UserAccountDirectory;
+import Business.Profiles.FacultyProfile;
 
 import UserInterface.WorkAreas.AdminRole.AdminRoleWorkAreaJPanel;
 import UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
@@ -175,7 +176,15 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
         }
+        
 */
+        if (profile instanceof FacultyProfile) {
+           FacultyProfile fpp = (FacultyProfile) profile;
+           facultyworkarea = new FacultyWorkAreaJPanel(business, CardSequencePanel);
+           CardSequencePanel.removeAll();
+           CardSequencePanel.add("faculty", facultyworkarea);
+           ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        }
 
     }//GEN-LAST:event_LoginButtonActionPerformed
 
