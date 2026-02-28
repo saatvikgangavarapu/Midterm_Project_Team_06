@@ -4,17 +4,35 @@
  */
 package UserInterface.WorkAreas.FacultyRole.FacultyRoleWorkResp02;
 
+import Business.Business;
+import Business.Person.Person;
+import Business.Profiles.FacultyProfile;
+import javax.swing.JPanel;
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author admin
+ * @author Saatvik Gangavarapu
  */
 public class ManageFacultyProfileJPanel extends javax.swing.JPanel {
-
+    private JPanel CardSequencePanel;
+    private Business business;
+    private FacultyProfile facultyProfile;
+    private Person person;
     /**
      * Creates new form ManageFacultyProfileJPanel
      */
-    public ManageFacultyProfileJPanel() {
+    
+    public ManageFacultyProfileJPanel(Business b, FacultyProfile fp, JPanel clp) {
         initComponents();
+        this.business = b;
+        this.facultyProfile = fp;
+        this.CardSequencePanel = clp;
+        this.person = fp.getPerson();
+        
+        populateFields();
+        setEditMode(false);
+        
     }
 
     /**
@@ -26,19 +44,152 @@ public class ManageFacultyProfileJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTitle = new javax.swing.JLabel();
+        lblName = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        btnBack = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
+
+        setBackground(new java.awt.Color(0, 153, 153));
+
+        lblTitle.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        lblTitle.setText("Faculty - My Profile");
+
+        lblName.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lblName.setText("Name");
+
+        btnBack.setText("<< Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
+        btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
+
+        btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
+
+        btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBack))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(btnEdit)
+                        .addGap(118, 118, 118)
+                        .addComponent(btnSave)
+                        .addGap(130, 130, 130)
+                        .addComponent(btnCancel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitle)
+                    .addComponent(btnBack))
+                .addGap(94, 94, 94)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblName)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEdit)
+                    .addComponent(btnSave)
+                    .addComponent(btnCancel))
+                .addGap(71, 71, 71))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        CardSequencePanel.remove(this);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        setEditMode(true);
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+        if (!validateInput()) return;
+        
+        person.setPersonId(txtName.getText().trim());
+        JOptionPane.showMessageDialog(this, "Profile updated!");
+        populateFields();
+        setEditMode(false);
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        populateFields();
+        setEditMode(false);
+    }//GEN-LAST:event_btnCancelActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnSave;
+    private javax.swing.JLabel lblName;
+    private javax.swing.JLabel lblTitle;
+    private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
-}
+
+    private void populateFields() {
+        txtName.setText(person.getPersonId());
+    }
+
+    private void setEditMode(boolean editable) {
+        txtName.setEnabled(editable);
+        btnSave.setEnabled(editable);
+        btnCancel.setEnabled(editable);
+        btnEdit.setEnabled(!editable);
+        
+        
+    }
+    
+    private boolean validateInput() {
+        String name = txtName.getText() == null ? "" : txtName.getText().trim();
+        if (name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Name cannot be empty.");
+            return false;
+        }
+        return true;
+    }  
+ }
