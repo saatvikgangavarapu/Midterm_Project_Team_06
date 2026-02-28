@@ -8,6 +8,7 @@ package UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp;
 import Business.Business;
 import Business.UserAccounts.UserAccount;
 import Business.UserAccounts.UserAccountDirectory;
+import java.awt.CardLayout;
 
 
 import javax.swing.JPanel;
@@ -120,17 +121,17 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
 
         UserAccountTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "User Name", "Role", "Person ID"
+                "User Name", "Role", "Name", "Person ID"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -151,8 +152,7 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
         // TODO add your handling code here:
         CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
- //       ((java.awt.CardLayout)CardSequencePanel.getLayout()).show(CardSequencePanel, "IdentifyEventTypes");
+        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
 
     }//GEN-LAST:event_BackActionPerformed
 
@@ -162,10 +162,10 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
             javax.swing.JOptionPane.showMessageDialog(this, "Please select a user account.");
             return;
         }
+
         AdminUserAccount panel = new AdminUserAccount(business, selecteduseraccount, CardSequencePanel, this);
         CardSequencePanel.add("AdminUserAccountView", panel);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "AdminUserAccountView");
     }//GEN-LAST:event_NextActionPerformed
 
     private void UserAccountTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserAccountTableMousePressed
@@ -202,9 +202,9 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         // TODO add your handling code here:
-        AdminUserAccount panel = new AdminUserAccount(business, null, CardSequencePanel, this);
-        CardSequencePanel.add("AdminUserAccountCreate", panel);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        AdminUserAccount editor = new AdminUserAccount(business, null, CardSequencePanel, this);
+        CardSequencePanel.add("AdminUserAccountCreate", editor);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "AdminUserAccountCreate");
     }//GEN-LAST:event_btnCreateActionPerformed
 
 

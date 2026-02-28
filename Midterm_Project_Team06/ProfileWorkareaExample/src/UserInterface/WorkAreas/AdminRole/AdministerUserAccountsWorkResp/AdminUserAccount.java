@@ -6,7 +6,11 @@
 package UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp;
 
 import Business.Business;
+import Business.Profiles.Profile;
 import Business.UserAccounts.UserAccount;
+import Business.UserAccounts.UserAccountDirectory;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -29,7 +33,7 @@ public class AdminUserAccount extends javax.swing.JPanel {
         this.CardSequencePanel = jp;
         this.selecteduseraccount = sua;
         this.business = business;
-        this.managePanel = managePanel;
+        this.managePanel = managePane;
 
         initComponents();
         populateFields();
@@ -60,7 +64,21 @@ public class AdminUserAccount extends javax.swing.JPanel {
         txtPassword.setEditable(true);
         btnUpdate.setText("Update >>");
     }
+    private Profile findProfileForRole(String role, String personId) {
+        if (role == null || personId == null) return null;
 
+        if (role.equalsIgnoreCase("Admin")) {
+            return business.getEmployeeDirectory().findEmployee(personId);
+        }
+        if (role.equalsIgnoreCase("Student")) {
+            return business.getStudentDirectory().findStudent(personId);
+        }
+        if (role.equalsIgnoreCase("Faculty")) {
+            return business.getFacultyDirectory().findFaculty(personId);
+        }
+        return null;
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -160,14 +178,66 @@ public class AdminUserAccount extends javax.swing.JPanel {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
+        String personId = txtPerson.getText().trim();
+        String username = txtUsername.getText().trim();
+        String password = txtPassword.getText().trim();
+        String role = (cmbRole.getSelectedItem() == null) ? "" : cmbRole.getSelectedItem().toString();
+        
+        if (personId.isEmpty() || username.isEmpty() || role.isEmpty()) { JOptionPane.showMessageDialog(this, "Person ID, Username, and Role are required.");
+            return;
+        }
+
+        Profile profile = findProfileForRole(role, personId);
+        if (profile == null) {
+            JOptionPane.showMessageDialog(this, "No matching profile found for this Person ID + Role.");
+            return;
+        }
+
+        UserAccountDirectory uad = business.getUserAccountDirectory();
+
+        if (selecteduseraccount == null) {
+            if (password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Password is required to create a new account.");
+                return;
+            }
+            if (uad.isUsernameTaken(username)) {
+                JOptionPane.showMessageDialog(this, "Username already exists.");
+                return;
+            }
+
+            selecteduseraccount = uad.newUserAccount(profile, username, password); // <-- capture it
+            JOptionPane.showMessageDialog(this, "User account created.");
+
+        } else {
+            String oldUsername = selecteduseraccount.getUserLoginName();
+            boolean usernameChanged = !oldUsername.equalsIgnoreCase(username);
+
+            if (usernameChanged && uad.isUsernameTaken(username)) {
+                JOptionPane.showMessageDialog(this, "Username already exists.");
+                return;
+            }
+
+            selecteduseraccount.setUserLoginName(username);
+
+            if (!password.isEmpty()) {
+                selecteduseraccount.setPassword(password);
+            }
+
+            JOptionPane.showMessageDialog(this, "User account updated.");
+        }
+
+        if (managePanel != null) managePanel.refreshTable();
+
         CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
+
     }//GEN-LAST:event_btnUpdateActionPerformed
+
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
          CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
 
 
     }//GEN-LAST:event_btnBackActionPerformed
