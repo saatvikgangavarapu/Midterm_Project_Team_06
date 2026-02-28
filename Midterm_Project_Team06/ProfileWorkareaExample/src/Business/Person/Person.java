@@ -21,6 +21,10 @@ public class Person {
     public String getPersonId() {
         return id;
     }
+    
+    public void setPersonId(String id){
+        this.id = id;
+    }
 
     public boolean isMatch(String id) {
         if (getPersonId().equals(id)) {

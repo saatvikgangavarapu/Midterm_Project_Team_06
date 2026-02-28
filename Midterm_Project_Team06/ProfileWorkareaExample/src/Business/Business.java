@@ -11,6 +11,8 @@ import Business.Profiles.StudentDirectory;
 
 import Business.UserAccounts.UserAccountDirectory;
 
+import Business.Courses.CourseDirectory;
+
 /**
  *
  * @author kal bugrara
@@ -24,6 +26,8 @@ public class Business {
     UserAccountDirectory useraccountdirectory;
     StudentDirectory studentdirectory;
     
+    CourseDirectory courseDirectory;
+    
 
 
     public Business(String n) {
@@ -33,6 +37,7 @@ public class Business {
         employeedirectory = new EmployeeDirectory(this);
         useraccountdirectory = new UserAccountDirectory();
         studentdirectory = new StudentDirectory();
+        courseDirectory = new CourseDirectory();
 
 
     }
@@ -52,6 +57,10 @@ public class Business {
 
     public StudentDirectory getStudentDirectory(){
         return studentdirectory;
+    }
+    
+    public CourseDirectory getCourseDirectory(){
+        return courseDirectory;
     }
 
 }

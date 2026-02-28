@@ -19,6 +19,8 @@ import Business.UserAccounts.UserAccountDirectory;
 import Business.Person.Person;
 import Business.Person.PersonDirectory;
 
+import Business.Courses.CourseDirectory;
+
 
 /**
  *
@@ -43,6 +45,10 @@ class ConfigureABusiness {
         Person person009 = persondirectory.newPerson("Fidelity"); //we use this as customer
         
         Person facultyPerson = persondirectory.newPerson("Prof Burgara");
+        
+        CourseDirectory cd = business.getCourseDirectory();
+        cd.addACourse("INFO5100", "Application Engineering & Development" , 4, facultyPerson.getPersonId());
+        cd.addACourse("INFOO7245","Agile Software Development" , 4, facultyPerson.getPersonId());
 
 // Create Admins to manage the business
         EmployeeDirectory employeedirectory = business.getEmployeeDirectory();
