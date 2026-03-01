@@ -5,7 +5,7 @@
 package UserInterface.WorkAreas.StudentRole.StudentPanels;
 
 import Business.Business;
-import Business.Course;
+import Business.Courses.Course;
 import Business.Profiles.StudentProfile;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author DELL
+ * @author Tanvi Modi
  */
 public class GraduationAuditJPanel extends javax.swing.JPanel {
 

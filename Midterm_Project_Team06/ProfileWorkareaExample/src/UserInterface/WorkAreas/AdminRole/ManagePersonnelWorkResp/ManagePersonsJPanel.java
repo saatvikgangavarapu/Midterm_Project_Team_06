@@ -27,7 +27,7 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
     private UserAccount selecteduseraccount;
     
     
-    public ManagePersonsJPanel(Business bz, JPanel jp, String mode) {
+    public ManagePersonsJPanel(Business bz, JPanel jp) {
         this.CardSequencePanel = jp;
         this.business = bz;
         this.mode = (mode == null) ? "" : mode.trim().toUpperCase();

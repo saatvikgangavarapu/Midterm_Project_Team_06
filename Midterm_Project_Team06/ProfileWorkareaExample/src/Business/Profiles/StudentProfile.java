@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 package Business.Profiles;
-
-import Business.Course;
+import Business.Courses.Course;
 import Business.Person.Person;
 import java.util.ArrayList;
 

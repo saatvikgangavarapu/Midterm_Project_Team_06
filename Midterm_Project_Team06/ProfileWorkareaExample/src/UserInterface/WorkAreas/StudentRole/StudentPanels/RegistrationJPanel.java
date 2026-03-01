@@ -5,7 +5,7 @@
 package UserInterface.WorkAreas.StudentRole.StudentPanels;
 
 import Business.Business;
-import Business.Course;
+import Business.Courses.Course;
 import Business.Profiles.StudentProfile;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author DELL
+ * @author Tanvi Modi
  */
 public class RegistrationJPanel extends javax.swing.JPanel {
 
@@ -211,7 +211,7 @@ public class RegistrationJPanel extends javax.swing.JPanel {
             "Course ID", "Course Name", "Credits"
         });
 
-        for (Course course : business.getCourseDirectory().getCourseList()) {
+        for (Course course : business.getCourseDirectory().getCourses()) {
 
             Object[] row = new Object[3];
             row[0] = course.getCourseId();

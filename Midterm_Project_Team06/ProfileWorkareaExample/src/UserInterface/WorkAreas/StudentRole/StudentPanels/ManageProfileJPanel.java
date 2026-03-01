@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author DELL
+ * @author Tanvi Modi
  */
 public class ManageProfileJPanel extends javax.swing.JPanel {
 
