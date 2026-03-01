@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Business;
+
 
 import Business.Profiles.EmployeeProfile;
 import Business.Profiles.Profile;
@@ -17,13 +17,9 @@ import UserInterface.WorkAreas.AdminRole.AdminRoleWorkAreaJPanel;
 import UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
 import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 import javax.swing.JPanel;
-<<<<<<< HEAD
-
-import Business.Profiles.FacultyProfile;
-
-=======
 import javax.swing.JOptionPane;
->>>>>>> main
+
+
 /**
  *
  * @author kal bugrara
@@ -31,6 +27,8 @@ import javax.swing.JOptionPane;
 public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
     Business business;
+
+
 
     /**
      * Creates new form PricingMainFrame

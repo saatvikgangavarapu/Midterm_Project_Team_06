@@ -4,31 +4,29 @@
  * and open the template in the editor.
 
 */
-package Business;
 
-import Business.Person.Person;
-import Business.Person.PersonDirectory;
-import Business.Profiles.EmployeeDirectory;
+
 import Business.Profiles.EmployeeProfile;
-import Business.Profiles.FacultyProfile;
-import Business.Profiles.StudentDirectory;
+import Business.Profiles.Profile;
 import Business.Profiles.StudentProfile;
-import Business.Profiles.FacultyDirectory;
-import Business.Profiles.FacultyProfile;
+
 import Business.UserAccounts.UserAccount;
 import Business.UserAccounts.UserAccountDirectory;
-import Business.Person.Person;
-import Business.Person.PersonDirectory;
+import Business.Profiles.FacultyProfile;
 
-import Business.Courses.CourseDirectory;
+import UserInterface.WorkAreas.AdminRole.AdminRoleWorkAreaJPanel;
+import UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
+import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
+import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
-import Business.Enrollment.EnrollmentDirectory;
-import Business.Courses.Course;
 
 /**
  *
  * @author kal bugrara
  */
+
+
 class ConfigureABusiness {
 
     static Business initialize() {
@@ -46,18 +44,6 @@ class ConfigureABusiness {
         Person person007 = persondirectory.newPerson("Laura Brown");
         Person person008 = persondirectory.newPerson("Jack While");
         Person person009 = persondirectory.newPerson("Fidelity"); //we use this as customer
-        
-        Person facultyPerson = persondirectory.newPerson("Prof Burgara");
-        
-        EnrollmentDirectory ed = business.getEnrollmentDirectory();
-        
-        CourseDirectory cd = business.getCourseDirectory();
-        cd.addACourse("INFO5100", "Application Engineering & Development" , 4, facultyPerson.getPersonId());
-        cd.addACourse("INFOO7245","Agile Software Development" , 4, facultyPerson.getPersonId());
-        Course course1 = cd.getCourses().get(0);
-        Course course2 = cd.getCourses().get(1);
-        
-        
 
 // Create Admins to manage the business
         EmployeeDirectory employeedirectory = business.getEmployeeDirectory();
@@ -66,11 +52,6 @@ class ConfigureABusiness {
         StudentDirectory studentdirectory = business.getStudentDirectory();
         StudentProfile studentprofile0 = studentdirectory.newStudentProfile(person003);
         
-        ed.addEnrollment(course1, studentprofile0, 97);
-        ed.addEnrollment(course2, studentprofile0, 67);
-        
-        FacultyProfile facultyprofile0 = new FacultyProfile(facultyPerson);
-        
 
 
    
@@ -78,19 +59,13 @@ class ConfigureABusiness {
         UserAccountDirectory uadirectory = business.getUserAccountDirectory();
         UserAccount ua3 = uadirectory.newUserAccount(employeeprofile0, "admin", "****"); /// order products for one of the customers and performed by a sales person
         UserAccount ua4 = uadirectory.newUserAccount(studentprofile0, "adam", "****"); /// order products for one of the customers and performed by a sales person
-<<<<<<< HEAD
-        UserAccount ua5 = uadirectory.newUserAccount(facultyprofile0, "faculty", "****");
-=======
         FacultyDirectory facultydirectory = business.getFacultyDirectory();
         FacultyProfile facultyprofile0 = facultydirectory.newFacultyProfile(person002);
->>>>>>> main
 
         UserAccount ua5 = uadirectory.newUserAccount(facultyprofile0, "gina", "****");
         return business;
-       
-        
-   
 
     }
 
 }
+
