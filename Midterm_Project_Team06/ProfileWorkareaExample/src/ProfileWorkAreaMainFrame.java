@@ -154,11 +154,11 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
         AdminRoleWorkAreaJPanel adminworkarea;
         String r = useraccount.getRole();
         Profile profile = useraccount.getAssociatedPersonProfile();
-
+        
 
         if (profile instanceof EmployeeProfile) {
 
-            adminworkarea = new AdminRoleWorkAreaJPanel(business, CardSequencePanel);
+            adminworkarea = new AdminRoleWorkAreaJPanel(business, CardSequencePanel, useraccount);
             CardSequencePanel.removeAll();
             CardSequencePanel.add("Admin", adminworkarea);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
@@ -171,16 +171,6 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
             studentworkareajpanel = new StudentWorkAreaJPanel(business, spp, CardSequencePanel);
             CardSequencePanel.removeAll();
             CardSequencePanel.add("student", studentworkareajpanel);
-            ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
-
-        }
-
-       if (profile instanceof FacultyProfile) {
-           
-            FacultyProfile fp = (FacultyProfile) profile;
-            facultyworkarea = new FacultyWorkAreaJPanel(business,fp, CardSequencePanel);
-            CardSequencePanel.removeAll();
-            CardSequencePanel.add("faculty", facultyworkarea);
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
         }
