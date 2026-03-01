@@ -15,6 +15,7 @@ import UserInterface.WorkAreas.AdminRole.ManagePersonnelWorkResp.ManagePersonsJP
 import javax.swing.JPanel;
 import Business.Profiles.FacultyProfile;
 import UserInterface.WorkAreas.FacultyRole.FacultyRoleWorkResp02.ManageFacultyProfileJPanel;
+import UserInterface.WorkAreas.FacultyRole.FacultyRoleWorkResp03.PerformanceReportJPanel;
 
 /**
  *
@@ -51,7 +52,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         jButton4 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         btnFacultyMyProfile = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
+        btnPerformanceReports = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setForeground(new java.awt.Color(51, 51, 51));
@@ -98,17 +99,17 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton11.setBackground(new java.awt.Color(102, 153, 255));
-        jButton11.setFont(getFont());
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("Performance Reports");
-        jButton11.setBorder(null);
-        jButton11.setMaximumSize(new java.awt.Dimension(200, 40));
-        jButton11.setMinimumSize(new java.awt.Dimension(20, 20));
-        jButton11.setPreferredSize(new java.awt.Dimension(240, 25));
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        btnPerformanceReports.setBackground(new java.awt.Color(102, 153, 255));
+        btnPerformanceReports.setFont(getFont());
+        btnPerformanceReports.setForeground(new java.awt.Color(255, 255, 255));
+        btnPerformanceReports.setText("Performance Reports");
+        btnPerformanceReports.setBorder(null);
+        btnPerformanceReports.setMaximumSize(new java.awt.Dimension(200, 40));
+        btnPerformanceReports.setMinimumSize(new java.awt.Dimension(20, 20));
+        btnPerformanceReports.setPreferredSize(new java.awt.Dimension(240, 25));
+        btnPerformanceReports.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                btnPerformanceReportsActionPerformed(evt);
             }
         });
 
@@ -130,7 +131,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btnFacultyMyProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnPerformanceReports, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(632, Short.MAX_VALUE))
         );
@@ -146,7 +147,7 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnFacultyMyProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnPerformanceReports, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(221, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -175,16 +176,20 @@ public class FacultyWorkAreaJPanel extends javax.swing.JPanel {
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 }//GEN-LAST:event_btnFacultyMyProfileIdentifyEventsActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+    private void btnPerformanceReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerformanceReportsActionPerformed
         // TODO add your handling code here:
+        PerformanceReportJPanel p = new PerformanceReportJPanel(business, facultyProfile, CardSequencePanel);
+        CardSequencePanel.add("Reports", p);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        
 
-}//GEN-LAST:event_jButton11ActionPerformed
+}//GEN-LAST:event_btnPerformanceReportsActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFacultyMyProfile;
+    private javax.swing.JButton btnPerformanceReports;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
