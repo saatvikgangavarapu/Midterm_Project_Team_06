@@ -210,10 +210,14 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
-        if (selecteduseraccount == null) {
+        UserAccount ua = getSelectedUserAccountFromTable();
+        if (ua == null) {
             JOptionPane.showMessageDialog(this, "Please select a user account.");
             return;
         }
+        AdminUserAccount panel = new AdminUserAccount(business, ua, CardSequencePanel, null);
+        CardSequencePanel.add("AdminUserAccountView", panel);
+        ((CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "AdminUserAccountView");
     }//GEN-LAST:event_btnViewActionPerformed
 
 
