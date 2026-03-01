@@ -5,8 +5,11 @@
 package UserInterface.WorkAreas.StudentRole.StudentPanels;
 
 import Business.Business;
+import Business.Course;
 import Business.Profiles.StudentProfile;
+import java.awt.CardLayout;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -26,6 +29,8 @@ public class RegistrationJPanel extends javax.swing.JPanel {
         this.business = business;
         this.CardSequencePanel = CardSequencePanel;
         this.student = student;
+        
+        populateTable();
     }
 
     /**
@@ -65,6 +70,11 @@ public class RegistrationJPanel extends javax.swing.JPanel {
         btnDrop.setText("Drop");
 
         btnBack.setText("Back<<<");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -103,6 +113,12 @@ public class RegistrationJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+         CardSequencePanel.remove(this);
+        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
+    }//GEN-LAST:event_btnBackActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
@@ -112,4 +128,26 @@ public class RegistrationJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblAvailableCourses;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+        
+         DefaultTableModel model =
+            (DefaultTableModel) tblAvailableCourses.getModel();
+
+    model.setRowCount(0);
+
+    model.setColumnIdentifiers(new String[]{
+        "Course ID", "Course Name", "Credits"
+    });
+
+    for (Course course : business.getCourseDirectory().getCourseList()) {
+
+        Object[] row = new Object[3];
+        row[0] = course.getCourseId();
+        row[1] = course.getCourseName();
+        row[2] = course.getCredits();
+
+        model.addRow(row);
+    }
+    }
 }

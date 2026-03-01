@@ -23,6 +23,7 @@ public class Business {
     UserAccountDirectory useraccountdirectory;
     StudentDirectory studentdirectory;
     FacultyDirectory facultydirectory;
+    CourseDirectory courseDirectory;
     
 
 
@@ -34,7 +35,15 @@ public class Business {
         useraccountdirectory = new UserAccountDirectory();
         studentdirectory = new StudentDirectory();
         facultydirectory = new FacultyDirectory();
+        courseDirectory = new CourseDirectory();
+    }
 
+    public CourseDirectory getCourseDirectory() {
+        return courseDirectory;
+    }
+
+    public void setCourseDirectory(CourseDirectory courseDirectory) {
+        this.courseDirectory = courseDirectory;
     }
 
     public PersonDirectory getPersonDirectory() {
