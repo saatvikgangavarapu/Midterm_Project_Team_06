@@ -31,7 +31,7 @@
                           <Component id="jButton10" min="-2" pref="164" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="jButton6" min="-2" pref="164" max="-2" attributes="0"/>
+                          <Component id="btnFacultyMyProfile" min="-2" pref="164" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="jButton11" min="-2" pref="164" max="-2" attributes="0"/>
                       </Group>
@@ -54,7 +54,7 @@
               </Group>
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton6" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Component id="btnFacultyMyProfile" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   <Component id="jButton11" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="221" max="32767" attributes="0"/>
@@ -76,9 +76,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value=" Manage Courses"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[200, 40]"/>
@@ -107,9 +105,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Manage Students Profiles"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[200, 40]"/>
@@ -125,7 +121,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton10ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton6">
+    <Component class="javax.swing.JButton" name="btnFacultyMyProfile">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="66" type="rgb"/>
@@ -138,9 +134,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value="My Profile"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[145, 40]"/>
@@ -153,7 +147,7 @@
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6IdentifyEventsActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFacultyMyProfileIdentifyEventsActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton11">
@@ -169,9 +163,7 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Performance Reports"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
-            <BevelBorder/>
-          </Border>
+          <Border info="null"/>
         </Property>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[200, 40]"/>
