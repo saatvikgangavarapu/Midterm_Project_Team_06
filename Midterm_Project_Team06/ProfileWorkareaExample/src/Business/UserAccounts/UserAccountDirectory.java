@@ -14,12 +14,17 @@ import java.util.ArrayList;
  * @author kal bugrara
  */
 public class UserAccountDirectory {
+    public boolean removeUserAccount(UserAccount ua){
+        if (ua == null) return false;
+        return useraccountlist.remove(ua);
+    }
     
-      ArrayList<UserAccount> useraccountlist ;
+    ArrayList<UserAccount> useraccountlist ;
     
+     
       public UserAccountDirectory (){
           
-       useraccountlist = new ArrayList();
+       useraccountlist = new ArrayList<>();
 
     }
 
@@ -54,4 +59,14 @@ public class UserAccountDirectory {
      {
          return useraccountlist;
      }
+     
+    public boolean isUsernameTaken(String username) {
+        if (username == null) return false;
+        for (UserAccount ua : useraccountlist) {
+            if (ua.getUserLoginName().equalsIgnoreCase(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

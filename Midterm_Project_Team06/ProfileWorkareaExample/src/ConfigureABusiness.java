@@ -13,7 +13,8 @@ import Business.Profiles.EmployeeProfile;
 import Business.Profiles.FacultyProfile;
 import Business.Profiles.StudentDirectory;
 import Business.Profiles.StudentProfile;
-
+import Business.Profiles.FacultyDirectory;
+import Business.Profiles.FacultyProfile;
 import Business.UserAccounts.UserAccount;
 import Business.UserAccounts.UserAccountDirectory;
 import Business.Person.Person;
@@ -77,8 +78,14 @@ class ConfigureABusiness {
         UserAccountDirectory uadirectory = business.getUserAccountDirectory();
         UserAccount ua3 = uadirectory.newUserAccount(employeeprofile0, "admin", "****"); /// order products for one of the customers and performed by a sales person
         UserAccount ua4 = uadirectory.newUserAccount(studentprofile0, "adam", "****"); /// order products for one of the customers and performed by a sales person
+<<<<<<< HEAD
         UserAccount ua5 = uadirectory.newUserAccount(facultyprofile0, "faculty", "****");
+=======
+        FacultyDirectory facultydirectory = business.getFacultyDirectory();
+        FacultyProfile facultyprofile0 = facultydirectory.newFacultyProfile(person002);
+>>>>>>> main
 
+        UserAccount ua5 = uadirectory.newUserAccount(facultyprofile0, "gina", "****");
         return business;
        
         
