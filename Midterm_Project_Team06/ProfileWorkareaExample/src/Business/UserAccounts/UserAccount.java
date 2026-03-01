@@ -27,7 +27,7 @@ public class UserAccount {
     }
 
     public String getPersonId(){
-        return profile.getPerson().getPersonId();
+        return (profile != null && profile.getPerson() != null) ? profile.getPerson().getPersonId() : "";
     }
     public String getUserLoginName(){
         return username;
@@ -37,25 +37,29 @@ public class UserAccount {
         if(getPersonId().equals(id)) return true;
         return false;
     }
-        public boolean IsValidUser(String un, String pw){
-        
-            if (username.equalsIgnoreCase(un) && password.equals(pw)) return true;
-            else return false;
-        
-        }
-        public String getRole(){
-            return profile.getRole();
-        }
-        
-        public Profile getAssociatedPersonProfile(){
-            return profile;
-        }
-        
+    public boolean IsValidUser(String un, String pw){
+        if (un == null || pw == null) return false;
+        if (username == null || password == null) return false;
+        return username.equalsIgnoreCase(un) && password.equals(pw);
+    }
+    public String getRole(){
+        return (profile != null) ? profile.getRole() : "";
+    }
+
+    public Profile getAssociatedPersonProfile(){
+        return profile;
+    }
+
     @Override
         public String toString(){
-            
-            return getUserLoginName();
+        return getUserLoginName();
+    }
+        public void setUserLoginName(String username){
+            this.username = username;
         }
         
+        public void setPassword(String password){
+            this.password = password;
+        }  
 }
 

@@ -12,8 +12,7 @@ import Business.Person.Person;
  * @author kal bugrara
  */
 public class StudentProfile extends Profile {
-
-    Person person;
+    
 //    Transcript transcript;
     //   EmploymentHistroy employmenthistory;
 
@@ -30,7 +29,7 @@ public class StudentProfile extends Profile {
     }
 
     public boolean isMatch(String id) {
-        return person.getPersonId().equals(id);
+        return getPerson() != null && getPerson().getPersonId() != null && getPerson().getPersonId().equals(id);
     }
 
 }

@@ -11,12 +11,13 @@ import Business.Profiles.StudentProfile;
 
 import Business.UserAccounts.UserAccount;
 import Business.UserAccounts.UserAccountDirectory;
+import Business.Profiles.FacultyProfile;
 
 import UserInterface.WorkAreas.AdminRole.AdminRoleWorkAreaJPanel;
 import UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
 import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
 import javax.swing.JPanel;
-
+import javax.swing.JOptionPane;
 /**
  *
  * @author kal bugrara
@@ -134,12 +135,14 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
 
         String un = UserNameTextField.getText();
         String pw = PasswordTextField.getText();
-
+        
         UserAccountDirectory uad = business.getUserAccountDirectory();
+        
         UserAccount useraccount = uad.AuthenticateUser(un, pw);
-        if (useraccount == null) {
-            return;
-        }
+            if (useraccount == null) {
+                JOptionPane.showMessageDialog(this, "Invalid username or password");
+                return;
+            }
         StudentWorkAreaJPanel studentworkareajpanel;
         FacultyWorkAreaJPanel facultyworkarea;
         AdminRoleWorkAreaJPanel adminworkarea;
@@ -173,7 +176,15 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
         }
+        
 */
+        if (profile instanceof FacultyProfile) {
+           FacultyProfile fpp = (FacultyProfile) profile;
+           facultyworkarea = new FacultyWorkAreaJPanel(business, CardSequencePanel);
+           CardSequencePanel.removeAll();
+           CardSequencePanel.add("faculty", facultyworkarea);
+           ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        }
 
     }//GEN-LAST:event_LoginButtonActionPerformed
 

@@ -12,10 +12,12 @@ package Business.Person;
 public class Person {
 
     String id;
-
+    String contactId;
+    
     public Person(String id) {
 
         this.id = id;
+        this.contactId = "";
     }
 
     public String getPersonId() {
@@ -28,7 +30,14 @@ public class Person {
         }
         return false;
     }
+    
+    public String getContactId() {
+        return contactId;
+    }
 
+    public void setContactId(String contactId) {
+        this.contactId = contactId;
+    }
     @Override
     public String toString() {
         return getPersonId();

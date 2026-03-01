@@ -5,7 +5,13 @@
  */
 package UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp;
 
+import Business.Business;
+import Business.Profiles.Profile;
+import Business.Person.Person;
 import Business.UserAccounts.UserAccount;
+import Business.UserAccounts.UserAccountDirectory;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -14,23 +20,88 @@ import javax.swing.JPanel;
  */
 
 public class AdminUserAccount extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form ManageSuppliersJPanel
      */
     JPanel CardSequencePanel;
 
     UserAccount selecteduseraccount;
+    Business business;
+    ManageUserAccountsJPanel managePanel;
 
-    public AdminUserAccount(UserAccount sua, JPanel jp) {
+    public AdminUserAccount(Business business, UserAccount sua, JPanel jp, ManageUserAccountsJPanel managePane) {
+        this.CardSequencePanel = jp;
+        this.selecteduseraccount = sua;
+        this.business = business;
+        this.managePanel = managePane;
 
-        CardSequencePanel = jp;
-        selecteduseraccount= sua;
         initComponents();
+        populateFields();
+        updateEmailNuidLabel();
+    }
         //display user details here
 
-    }
+    private void populateFields() {
+        if (selecteduseraccount == null) {
+            txtPerson.setText("");
+            txtUsername.setText("");
+            txtPassword.setText("");
+            txtEmailNUID.setText("");
 
+            cmbRole.setSelectedIndex(-1);
+
+            txtPerson.setEditable(true);
+            txtUsername.setEditable(true);
+            txtPassword.setEditable(true);
+            txtEmailNUID.setEditable(true);
+            cmbRole.setEnabled(true);
+
+            btnUpdate.setText("Create >>");
+            return;
+        }
+   
+        
+        txtPerson.setText(selecteduseraccount.getPersonId());
+        txtUsername.setText(selecteduseraccount.getUserLoginName());
+        cmbRole.setSelectedItem(selecteduseraccount.getRole());
+
+        Person person = selecteduseraccount.getAssociatedPersonProfile().getPerson();
+        if (person != null) {
+            txtEmailNUID.setText(person.getContactId());
+        } else {
+            txtEmailNUID.setText("");
+        }
+        txtPassword.setText("");
+        txtPerson.setEditable(true);
+        cmbRole.setEnabled(true);
+        txtUsername.setEditable(true);
+        txtPassword.setEditable(true);
+        btnUpdate.setText("Update >>");
+    }
+     private void updateEmailNuidLabel() {
+            String role = (cmbRole.getSelectedItem() == null) ? "" : cmbRole.getSelectedItem().toString();
+            if ("Student".equalsIgnoreCase(role)) {
+                lblEmailNUID.setText("NUID");
+            } else {
+                lblEmailNUID.setText("Email");
+            }   
+     }
+    private Profile findProfileForRole(String role, String personId) {
+        if (role == null || personId == null) return null;
+
+        if (role.equalsIgnoreCase("Admin")) {
+            return business.getEmployeeDirectory().findEmployee(personId);
+        }
+        if (role.equalsIgnoreCase("Student")) {
+            return business.getStudentDirectory().findStudent(personId);
+        }
+        if (role.equalsIgnoreCase("Faculty")) {
+            return business.getFacultyDirectory().findFaculty(personId);
+        }
+        return null;
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,58 +111,230 @@ public class AdminUserAccount extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Back = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        Back1 = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        lblEmailNUID = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JTextField();
+        txtPerson = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JTextField();
+        cmbRole = new javax.swing.JComboBox<>();
+        txtEmailNUID = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
 
-        Back.setText("Update>>");
-        Back.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setText("Update>>");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackActionPerformed(evt);
+                btnUpdateActionPerformed(evt);
             }
         });
-        add(Back);
-        Back.setBounds(480, 290, 100, 32);
+        add(btnUpdate);
+        btnUpdate.setBounds(480, 290, 100, 23);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel2.setText("Administer User Account");
         add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 29);
+        jLabel2.setBounds(21, 20, 550, 28);
 
-        Back1.setText("<< Back");
-        Back1.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setText("<< Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Back1ActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
-        add(Back1);
-        Back1.setBounds(40, 290, 100, 32);
+        add(btnBack);
+        btnBack.setBounds(40, 290, 100, 23);
+
+        jLabel1.setText("Name");
+        add(jLabel1);
+        jLabel1.setBounds(170, 90, 80, 20);
+
+        lblEmailNUID.setText("Email");
+        add(lblEmailNUID);
+        lblEmailNUID.setBounds(170, 170, 80, 20);
+
+        jLabel4.setText("Password");
+        add(jLabel4);
+        jLabel4.setBounds(150, 250, 80, 17);
+
+        jLabel5.setText("Role");
+        add(jLabel5);
+        jLabel5.setBounds(170, 130, 80, 17);
+
+        txtPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordActionPerformed(evt);
+            }
+        });
+        add(txtPassword);
+        txtPassword.setBounds(250, 250, 130, 23);
+
+        txtPerson.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPersonActionPerformed(evt);
+            }
+        });
+        add(txtPerson);
+        txtPerson.setBounds(250, 90, 130, 23);
+
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsernameActionPerformed(evt);
+            }
+        });
+        add(txtUsername);
+        txtUsername.setBounds(250, 210, 130, 23);
+
+        cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Faculty", "Student" }));
+        cmbRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbRoleActionPerformed(evt);
+            }
+        });
+        add(cmbRole);
+        cmbRole.setBounds(250, 130, 130, 23);
+
+        txtEmailNUID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailNUIDActionPerformed(evt);
+            }
+        });
+        add(txtEmailNUID);
+        txtEmailNUID.setBounds(250, 170, 130, 23);
+
+        jLabel6.setText("Username");
+        add(jLabel6);
+        jLabel6.setBounds(150, 210, 80, 20);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
+        String personId = txtPerson.getText().trim();
+        String username = txtUsername.getText().trim();
+        String password = txtPassword.getText().trim();
+        String role = (cmbRole.getSelectedItem() == null) ? "" : cmbRole.getSelectedItem().toString();
+        String contactId = txtEmailNUID.getText().trim();
+        Profile profile;
+        
+        if (personId.isEmpty() || username.isEmpty() || role.isEmpty()) { 
+            JOptionPane.showMessageDialog(this, "Person ID, Username, and Role are required.");
+            return;
+        }
+        
+        if (selecteduseraccount == null) {
+            Person p = business.getPersonDirectory().newPerson(personId);
+            p.setContactId(contactId);
+            
+            if ("Admin".equalsIgnoreCase(role)) {
+                profile = business.getEmployeeDirectory().newEmployeeProfile(p);
+            } else if ("Student".equalsIgnoreCase(role)) {
+                profile = business.getStudentDirectory().newStudentProfile(p);
+            } else if ("Faculty".equalsIgnoreCase(role)) {
+                profile = business.getFacultyDirectory().newFacultyProfile(p);
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid role selected.");
+                return;
+            }
+            
+        } else {
+            profile = selecteduseraccount.getAssociatedPersonProfile();
+            Person p = profile.getPerson();
+            if (p != null) {
+                p.setContactId(contactId);
+            }
+        }
+        
+        UserAccountDirectory uad = business.getUserAccountDirectory();
+
+        if (selecteduseraccount == null) {
+            if (password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Password is required to create a new account.");
+                return;
+            }
+            if (uad.isUsernameTaken(username)) {
+                JOptionPane.showMessageDialog(this, "Username already exists.");
+                return;
+            }
+
+            selecteduseraccount = uad.newUserAccount(profile, username, password); 
+            JOptionPane.showMessageDialog(this, "User account created.");
+
+        } else {
+            String oldUsername = selecteduseraccount.getUserLoginName();
+            boolean usernameChanged = !oldUsername.equalsIgnoreCase(username);
+
+            if (usernameChanged && uad.isUsernameTaken(username)) {
+                JOptionPane.showMessageDialog(this, "Username already exists.");
+                return;
+            }
+
+            selecteduseraccount.setUserLoginName(username);
+
+            if (!password.isEmpty()) {
+                selecteduseraccount.setPassword(password);
+            }
+
+            JOptionPane.showMessageDialog(this, "User account updated.");
+        }
+
+        if (managePanel != null) managePanel.refreshTable();
 
         CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
 
-    }//GEN-LAST:event_BackActionPerformed
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void Back1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back1ActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
          CardSequencePanel.remove(this);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
 
 
-    }//GEN-LAST:event_Back1ActionPerformed
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordActionPerformed
+
+    private void txtPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPersonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPersonActionPerformed
+
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsernameActionPerformed
+
+    private void cmbRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRoleActionPerformed
+        // TODO add your handling code here:
+        updateEmailNuidLabel();
+    }//GEN-LAST:event_cmbRoleActionPerformed
+
+    private void txtEmailNUIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailNUIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailNUIDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Back;
-    private javax.swing.JButton Back1;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cmbRole;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel lblEmailNUID;
+    private javax.swing.JTextField txtEmailNUID;
+    private javax.swing.JTextField txtPassword;
+    private javax.swing.JTextField txtPerson;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
 }
