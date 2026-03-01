@@ -7,6 +7,7 @@ package UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp;
 
 import Business.Business;
 import Business.Profiles.Profile;
+import Business.Person.Person;
 import Business.UserAccounts.UserAccount;
 import Business.UserAccounts.UserAccountDirectory;
 import java.awt.CardLayout;
@@ -37,6 +38,7 @@ public class AdminUserAccount extends javax.swing.JPanel {
 
         initComponents();
         populateFields();
+        updateEmailNuidLabel();
     }
         //display user details here
 
@@ -45,18 +47,31 @@ public class AdminUserAccount extends javax.swing.JPanel {
             txtPerson.setText("");
             txtUsername.setText("");
             txtPassword.setText("");
+            txtEmailNUID.setText("");
+
             cmbRole.setSelectedIndex(-1);
+
             txtPerson.setEditable(true);
             txtUsername.setEditable(true);
             txtPassword.setEditable(true);
+            txtEmailNUID.setEditable(true);
             cmbRole.setEnabled(true);
+
             btnUpdate.setText("Create >>");
             return;
         }
+   
+        
         txtPerson.setText(selecteduseraccount.getPersonId());
         txtUsername.setText(selecteduseraccount.getUserLoginName());
         cmbRole.setSelectedItem(selecteduseraccount.getRole());
-        
+
+        Person person = selecteduseraccount.getAssociatedPersonProfile().getPerson();
+        if (person != null) {
+            txtEmailNUID.setText(person.getContactId());
+        } else {
+            txtEmailNUID.setText("");
+        }
         txtPassword.setText("");
         txtPerson.setEditable(true);
         cmbRole.setEnabled(true);
@@ -64,6 +79,14 @@ public class AdminUserAccount extends javax.swing.JPanel {
         txtPassword.setEditable(true);
         btnUpdate.setText("Update >>");
     }
+     private void updateEmailNuidLabel() {
+            String role = (cmbRole.getSelectedItem() == null) ? "" : cmbRole.getSelectedItem().toString();
+            if ("Student".equalsIgnoreCase(role)) {
+                lblEmailNUID.setText("NUID");
+            } else {
+                lblEmailNUID.setText("Email");
+            }   
+     }
     private Profile findProfileForRole(String role, String personId) {
         if (role == null || personId == null) return null;
 
@@ -92,13 +115,15 @@ public class AdminUserAccount extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblEmailNUID = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txtPassword = new javax.swing.JTextField();
         txtPerson = new javax.swing.JTextField();
         txtUsername = new javax.swing.JTextField();
         cmbRole = new javax.swing.JComboBox<>();
+        txtEmailNUID = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -126,21 +151,21 @@ public class AdminUserAccount extends javax.swing.JPanel {
         add(btnBack);
         btnBack.setBounds(40, 290, 100, 23);
 
-        jLabel1.setText("Person");
+        jLabel1.setText("Name");
         add(jLabel1);
-        jLabel1.setBounds(150, 110, 50, 17);
+        jLabel1.setBounds(170, 90, 80, 20);
 
-        jLabel3.setText("Username");
-        add(jLabel3);
-        jLabel3.setBounds(140, 180, 80, 20);
+        lblEmailNUID.setText("Email");
+        add(lblEmailNUID);
+        lblEmailNUID.setBounds(170, 170, 80, 20);
 
         jLabel4.setText("Password");
         add(jLabel4);
-        jLabel4.setBounds(140, 220, 80, 17);
+        jLabel4.setBounds(150, 250, 80, 17);
 
         jLabel5.setText("Role");
         add(jLabel5);
-        jLabel5.setBounds(170, 150, 30, 17);
+        jLabel5.setBounds(170, 130, 80, 17);
 
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,7 +173,7 @@ public class AdminUserAccount extends javax.swing.JPanel {
             }
         });
         add(txtPassword);
-        txtPassword.setBounds(250, 220, 130, 23);
+        txtPassword.setBounds(250, 250, 130, 23);
 
         txtPerson.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,7 +181,7 @@ public class AdminUserAccount extends javax.swing.JPanel {
             }
         });
         add(txtPerson);
-        txtPerson.setBounds(250, 100, 130, 23);
+        txtPerson.setBounds(250, 90, 130, 23);
 
         txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,7 +189,7 @@ public class AdminUserAccount extends javax.swing.JPanel {
             }
         });
         add(txtUsername);
-        txtUsername.setBounds(250, 180, 130, 23);
+        txtUsername.setBounds(250, 210, 130, 23);
 
         cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Faculty", "Student" }));
         cmbRole.addActionListener(new java.awt.event.ActionListener() {
@@ -173,7 +198,19 @@ public class AdminUserAccount extends javax.swing.JPanel {
             }
         });
         add(cmbRole);
-        cmbRole.setBounds(250, 140, 130, 23);
+        cmbRole.setBounds(250, 130, 130, 23);
+
+        txtEmailNUID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailNUIDActionPerformed(evt);
+            }
+        });
+        add(txtEmailNUID);
+        txtEmailNUID.setBounds(250, 170, 130, 23);
+
+        jLabel6.setText("Username");
+        add(jLabel6);
+        jLabel6.setBounds(150, 210, 80, 20);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -182,17 +219,37 @@ public class AdminUserAccount extends javax.swing.JPanel {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
         String role = (cmbRole.getSelectedItem() == null) ? "" : cmbRole.getSelectedItem().toString();
+        String contactId = txtEmailNUID.getText().trim();
+        Profile profile;
         
-        if (personId.isEmpty() || username.isEmpty() || role.isEmpty()) { JOptionPane.showMessageDialog(this, "Person ID, Username, and Role are required.");
+        if (personId.isEmpty() || username.isEmpty() || role.isEmpty()) { 
+            JOptionPane.showMessageDialog(this, "Person ID, Username, and Role are required.");
             return;
         }
-
-        Profile profile = findProfileForRole(role, personId);
-        if (profile == null) {
-            JOptionPane.showMessageDialog(this, "No matching profile found for this Person ID + Role.");
-            return;
+        
+        if (selecteduseraccount == null) {
+            Person p = business.getPersonDirectory().newPerson(personId);
+            p.setContactId(contactId);
+            
+            if ("Admin".equalsIgnoreCase(role)) {
+                profile = business.getEmployeeDirectory().newEmployeeProfile(p);
+            } else if ("Student".equalsIgnoreCase(role)) {
+                profile = business.getStudentDirectory().newStudentProfile(p);
+            } else if ("Faculty".equalsIgnoreCase(role)) {
+                profile = business.getFacultyDirectory().newFacultyProfile(p);
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid role selected.");
+                return;
+            }
+            
+        } else {
+            profile = selecteduseraccount.getAssociatedPersonProfile();
+            Person p = profile.getPerson();
+            if (p != null) {
+                p.setContactId(contactId);
+            }
         }
-
+        
         UserAccountDirectory uad = business.getUserAccountDirectory();
 
         if (selecteduseraccount == null) {
@@ -205,7 +262,7 @@ public class AdminUserAccount extends javax.swing.JPanel {
                 return;
             }
 
-            selecteduseraccount = uad.newUserAccount(profile, username, password); // <-- capture it
+            selecteduseraccount = uad.newUserAccount(profile, username, password); 
             JOptionPane.showMessageDialog(this, "User account created.");
 
         } else {
@@ -256,7 +313,12 @@ public class AdminUserAccount extends javax.swing.JPanel {
 
     private void cmbRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRoleActionPerformed
         // TODO add your handling code here:
+        updateEmailNuidLabel();
     }//GEN-LAST:event_cmbRoleActionPerformed
+
+    private void txtEmailNUIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailNUIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailNUIDActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -265,9 +327,11 @@ public class AdminUserAccount extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cmbRole;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel lblEmailNUID;
+    private javax.swing.JTextField txtEmailNUID;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtPerson;
     private javax.swing.JTextField txtUsername;

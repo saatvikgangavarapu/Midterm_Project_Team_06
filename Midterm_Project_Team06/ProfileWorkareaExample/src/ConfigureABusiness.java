@@ -57,7 +57,7 @@ class ConfigureABusiness {
         FacultyDirectory facultydirectory = business.getFacultyDirectory();
         FacultyProfile facultyprofile0 = facultydirectory.newFacultyProfile(person002);
 
-        UserAccount ua5 = uadirectory.newUserAccount(facultyprofile0, "john", "****");
+        UserAccount ua5 = uadirectory.newUserAccount(facultyprofile0, "gina", "****");
         return business;
 
     }

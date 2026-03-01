@@ -32,7 +32,6 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
         this.business = bz;
         initComponents();
         refreshTable();
-
     }
     
     
@@ -121,17 +120,17 @@ public class ManageUserAccountsJPanel extends javax.swing.JPanel {
 
         UserAccountTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "User Name", "Role", "Name", "Person ID"
+                "User Name", "Role", "Name"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

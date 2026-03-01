@@ -9,8 +9,8 @@ import Business.Business;
 import UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp.AdminUserAccount;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
-
-
+import Business.UserAccounts.UserAccount;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JPanel;
 
 /**
@@ -18,22 +18,58 @@ import javax.swing.JPanel;
  * @author kal bugrara
  */
 public class ManagePersonsJPanel extends javax.swing.JPanel {
-
     /**
      * Creates new form ManageSuppliersJPanel
      */
     JPanel CardSequencePanel;
     Business business;
-
-
-    public ManagePersonsJPanel(Business bz, JPanel jp) {
-        CardSequencePanel = jp;
+    private String mode;
+    private UserAccount selecteduseraccount;
+    
+    
+    public ManagePersonsJPanel(Business bz, JPanel jp, String mode) {
+        this.CardSequencePanel = jp;
         this.business = bz;
+        this.mode = (mode == null) ? "" : mode.trim().toUpperCase();
         initComponents();
-
+        configureHeader();
+        refreshTable();
     }
+    private void configureHeader() {
+        if ("FACULTY".equals(mode)) {
+            lblManagePersons.setText("Manage Faculty");
+        } else if ("STUDENT".equals(mode)) {
+            lblManagePersons.setText("Manage Students");
+        } else {
+            lblManagePersons.setText("Manage Persons");
+        }
+    }
+    public void refreshTable() {
+        javax.swing.table.DefaultTableModel dtm = (javax.swing.table.DefaultTableModel) UserAccountTable.getModel();
+        dtm.setRowCount(0);
 
+        for (UserAccount ua : business.getUserAccountDirectory().getUserAccountList()) {
+            String role = ua.getRole();
 
+            if ("Admin".equalsIgnoreCase(role)) continue;
+
+            if ("FACULTY".equals(mode) && !"Faculty".equalsIgnoreCase(role)) continue;
+            if ("STUDENT".equals(mode) && !"Student".equalsIgnoreCase(role)) continue;
+
+            Object[] row = new Object[3];
+            row[0] = ua;
+            row[1] = role;
+            row[2] = ua.getPersonId();
+            dtm.addRow(row);
+        }
+    }
+    
+    private UserAccount getSelectedUserAccountFromTable() {
+        int row = UserAccountTable.getSelectedRow();
+        if (row < 0) return null;
+        return (UserAccount) UserAccountTable.getValueAt(row, 0);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,11 +80,12 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         Back = new javax.swing.JButton();
-        Next = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtPerson = new javax.swing.JTextField();
+        lblManagePersons = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        UserAccountTable = new javax.swing.JTable();
+        btnDelete = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnView = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 153, 153));
         setLayout(null);
@@ -60,37 +97,68 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
             }
         });
         add(Back);
-        Back.setBounds(20, 260, 80, 23);
+        Back.setBounds(30, 300, 80, 23);
 
-        Next.setText("Next >>");
-        Next.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NextActionPerformed(evt);
+        lblManagePersons.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        lblManagePersons.setText("Manage Persons");
+        add(lblManagePersons);
+        lblManagePersons.setBounds(21, 20, 550, 28);
+
+        UserAccountTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "User Name", "Role", "Name"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        add(Next);
-        Next.setBounds(500, 260, 80, 23);
-
-        jLabel1.setText("Name");
-        add(jLabel1);
-        jLabel1.setBounds(20, 60, 190, 17);
-
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel2.setText("Manage Personnel (HR)");
-        add(jLabel2);
-        jLabel2.setBounds(21, 20, 550, 28);
-
-        jLabel3.setText("Person ID");
-        add(jLabel3);
-        jLabel3.setBounds(180, 160, 70, 17);
-
-        txtPerson.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPersonActionPerformed(evt);
+        UserAccountTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                UserAccountTableMousePressed(evt);
             }
         });
-        add(txtPerson);
-        txtPerson.setBounds(260, 157, 130, 23);
+        jScrollPane1.setViewportView(UserAccountTable);
+
+        add(jScrollPane1);
+        jScrollPane1.setBounds(30, 110, 550, 130);
+
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        add(btnDelete);
+        btnDelete.setBounds(500, 250, 80, 23);
+
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+        add(btnUpdate);
+        btnUpdate.setBounds(120, 250, 78, 23);
+
+        btnView.setText("View");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
+        add(btnView);
+        btnView.setBounds(30, 250, 72, 23);
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
@@ -100,48 +168,63 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_BackActionPerformed
 
-    private void NextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextActionPerformed
+    private void UserAccountTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserAccountTableMousePressed
+        // Extracts the row (uaser account) in the table that is selected by the user
+        int selectedRow = UserAccountTable.getSelectedRow();
+        if (selectedRow < 0) {
+            selecteduseraccount = null;
+            return;
+        }
+        selecteduseraccount = (UserAccount) UserAccountTable.getValueAt(selectedRow, 0);
+    }//GEN-LAST:event_UserAccountTableMousePressed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-        String personId = txtPerson.getText().trim();
-
-        if (personId.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Person ID required.");
-            return;
+         if (selecteduseraccount == null) {
+             JOptionPane.showMessageDialog(this, "Please select a user account.");
+             return;
         }
 
-        if (business.getPersonDirectory().findPerson(personId) != null) {
-            JOptionPane.showMessageDialog(this, "Person ID already exists.");
+        int confirm = JOptionPane.showConfirmDialog(this, "Delete user account: " + selecteduseraccount.getUserLoginName() + "?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION){
             return;
         }
-
-        business.getPersonDirectory().newPerson(personId);
-        JOptionPane.showMessageDialog(this, "Person created.");
         
-        
-        if (personId.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Person ID required.");
-            return;
-        }
+        business.getUserAccountDirectory().removeUserAccount(selecteduseraccount);
+        selecteduseraccount = null;
+        refreshTable();
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
-        business.getPersonDirectory().newPerson(personId);
-
-        AdminUserAccount editor = new AdminUserAccount(business, null, CardSequencePanel, null);
-        CardSequencePanel.add("AdminUserAccountCreate", editor);
-        ((CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "AdminUserAccountCreate");
-    }//GEN-LAST:event_NextActionPerformed
-
-    private void txtPersonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPersonActionPerformed
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPersonActionPerformed
+        UserAccount ua = getSelectedUserAccountFromTable();
+        if (ua == null) {
+            JOptionPane.showMessageDialog(this, "Please select a user account.");
+            return;
+        }
+
+        AdminUserAccount panel = new AdminUserAccount(business, ua, CardSequencePanel, null);
+        CardSequencePanel.add("AdminUserAccountFromManagePersons", panel);
+        ((CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "AdminUserAccountFromManagePersons");
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        // TODO add your handling code here:
+        if (selecteduseraccount == null) {
+            JOptionPane.showMessageDialog(this, "Please select a user account.");
+            return;
+        }
+    }//GEN-LAST:event_btnViewActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Back;
-    private javax.swing.JButton Next;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField txtPerson;
+    private javax.swing.JTable UserAccountTable;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton btnView;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblManagePersons;
     // End of variables declaration//GEN-END:variables
 
 }
