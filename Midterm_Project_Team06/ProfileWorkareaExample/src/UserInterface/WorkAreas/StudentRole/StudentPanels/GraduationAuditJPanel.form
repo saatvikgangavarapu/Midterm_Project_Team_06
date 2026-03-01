@@ -29,20 +29,20 @@
                           <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="201" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblCreditsEarned" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblGraduationStatus" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="217" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="btnCreditsEarned" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnGraduationStatus" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="btnCreditsEarned" max="32767" attributes="0"/>
-                              <Component id="btnGraduationStatus" pref="154" max="32767" attributes="0"/>
+                              <Component id="txtTotalCreditsEarned" max="32767" attributes="0"/>
+                              <Component id="txtGraduationStatus" pref="154" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="284" max="32767" attributes="0"/>
+              <EmptySpace pref="261" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -53,17 +53,17 @@
               <Component id="lblTitle" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="124" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="lblCreditsEarned" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnCreditsEarned" pref="28" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="txtTotalCreditsEarned" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCreditsEarned" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="btnGraduationStatus" min="-2" pref="29" max="-2" attributes="0"/>
-                  <Component id="lblGraduationStatus" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="txtGraduationStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnGraduationStatus" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="62" max="32767" attributes="0"/>
+              <EmptySpace pref="58" max="32767" attributes="0"/>
               <Component id="btnBack" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
           </Group>
@@ -100,29 +100,32 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="lblCreditsEarned">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Total Credits earned "/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblGraduationStatus">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Graduation Status"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnCreditsEarned">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCreditsEarnedActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnGraduationStatus">
-    </Component>
     <Component class="javax.swing.JButton" name="btnBack">
       <Properties>
         <Property name="text" type="java.lang.String" value="Back&lt;&lt;&lt;"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtTotalCreditsEarned">
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtGraduationStatus">
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCreditsEarned">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Total Credits Earned"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCreditsEarnedActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnGraduationStatus">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Graduation Status"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGraduationStatusActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
