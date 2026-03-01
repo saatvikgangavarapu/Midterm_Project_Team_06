@@ -8,8 +8,14 @@ package Business;
 import Business.Person.PersonDirectory;
 import Business.Profiles.EmployeeDirectory;
 import Business.Profiles.StudentDirectory;
+
 import Business.UserAccounts.UserAccountDirectory;
-import Business.Profiles.FacultyDirectory;
+
+import Business.Courses.CourseDirectory;
+
+import Business.Enrollment.EnrollmentDirectory;
+import Business.StudentProf.StudentProfDirectory;
+
 /**
  *
  * @author kal bugrara
@@ -22,7 +28,13 @@ public class Business {
     EmployeeDirectory employeedirectory;
     UserAccountDirectory useraccountdirectory;
     StudentDirectory studentdirectory;
-    FacultyDirectory facultydirectory;
+    
+    CourseDirectory courseDirectory;
+    
+    EnrollmentDirectory enrollmentDirectory;
+    
+    StudentProfDirectory studentProfDirectory;
+    
     
 
 
@@ -33,7 +45,10 @@ public class Business {
         employeedirectory = new EmployeeDirectory(this);
         useraccountdirectory = new UserAccountDirectory();
         studentdirectory = new StudentDirectory();
-        facultydirectory = new FacultyDirectory();
+        courseDirectory = new CourseDirectory();
+        enrollmentDirectory = new EnrollmentDirectory();
+        studentProfDirectory = new StudentProfDirectory();
+
 
     }
 
@@ -53,7 +68,17 @@ public class Business {
     public StudentDirectory getStudentDirectory(){
         return studentdirectory;
     }
-    public FacultyDirectory getFacultyDirectory() {
-        return facultydirectory;
+    
+    public CourseDirectory getCourseDirectory(){
+        return courseDirectory;
     }
+    
+    public EnrollmentDirectory getEnrollmentDirectory(){
+        return enrollmentDirectory;
+    }
+    
+    public StudentProfDirectory getStudentProfDirectory(){
+        return studentProfDirectory;
+    }
+
 }
