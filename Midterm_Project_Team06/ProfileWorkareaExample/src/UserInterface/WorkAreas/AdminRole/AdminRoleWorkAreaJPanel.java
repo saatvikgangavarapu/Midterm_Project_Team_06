@@ -176,7 +176,7 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnManageStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageStudentsActionPerformed
         // TODO add your handling code here:
-        ManagePersonsJPanel panel = new ManagePersonsJPanel(business, CardSequencePanel, "STUDENT");
+        ManagePersonsJPanel panel = new ManagePersonsJPanel(business, CardSequencePanel);
         CardSequencePanel.add("ManageStudents", panel);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "ManageStudents");
     }//GEN-LAST:event_btnManageStudentsActionPerformed
@@ -185,7 +185,7 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAdminProfileIdentifyEventsActionPerformed
 
     private void BtnManageFacultyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnManageFacultyActionPerformed
-        ManagePersonsJPanel panel = new ManagePersonsJPanel(business, CardSequencePanel, "FACULTY");
+        ManagePersonsJPanel panel = new ManagePersonsJPanel(business, CardSequencePanel);
         CardSequencePanel.add("ManageFaculty", panel);
         ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "ManageFaculty");
     }//GEN-LAST:event_BtnManageFacultyActionPerformed
