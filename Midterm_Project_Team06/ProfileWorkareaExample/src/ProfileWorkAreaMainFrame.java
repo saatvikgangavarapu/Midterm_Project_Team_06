@@ -16,14 +16,14 @@ import Business.Profiles.FacultyProfile;
 import UserInterface.WorkAreas.AdminRole.AdminRoleWorkAreaJPanel;
 import UserInterface.WorkAreas.FacultyRole.FacultyWorkAreaJPanel;
 import UserInterface.WorkAreas.StudentRole.StudentWorkAreaJPanel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-<<<<<<< HEAD
+
 
 import Business.Profiles.FacultyProfile;
 
-=======
 import javax.swing.JOptionPane;
->>>>>>> main
+
 /**
  *
  * @author kal bugrara
@@ -184,18 +184,15 @@ public class ProfileWorkAreaMainFrame extends javax.swing.JFrame {
             ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
 
         }
-<<<<<<< HEAD
-=======
-        
-*/
+
         if (profile instanceof FacultyProfile) {
-           FacultyProfile fpp = (FacultyProfile) profile;
-           facultyworkarea = new FacultyWorkAreaJPanel(business, CardSequencePanel);
+           FacultyProfile fp = (FacultyProfile) profile;
+           facultyworkarea = new FacultyWorkAreaJPanel(business,fp, CardSequencePanel);
            CardSequencePanel.removeAll();
            CardSequencePanel.add("faculty", facultyworkarea);
            ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
         }
->>>>>>> main
+
 
     }//GEN-LAST:event_LoginButtonActionPerformed
 

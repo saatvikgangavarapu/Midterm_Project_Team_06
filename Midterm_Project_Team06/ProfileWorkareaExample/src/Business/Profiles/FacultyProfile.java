@@ -4,20 +4,14 @@
  */
 package Business.Profiles;
 import Business.Person.Person;
-<<<<<<< HEAD
 /**
  *
- * @author admin
- */
-public class FacultyProfile extends Profile {
-=======
 
 /**
  *
  * @author sashajohnson
  */
 public class FacultyProfile extends Profile{
->>>>>>> main
     public FacultyProfile(Person p) {
         super(p);
     }
@@ -26,12 +20,9 @@ public class FacultyProfile extends Profile{
     public String getRole() {
         return "Faculty";
     }
-<<<<<<< HEAD
-=======
 
     @Override
     public boolean isMatch(String id) {
         return getPerson() != null && getPerson().getPersonId() != null && getPerson().getPersonId().equals(id);
     }
->>>>>>> main
 }

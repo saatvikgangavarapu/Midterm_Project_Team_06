@@ -148,10 +148,18 @@ public class PerformanceReportJPanel extends javax.swing.JPanel {
 
     private void cmbCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCourseActionPerformed
         // TODO add your handling code here:
+        String selectedId = (String) cmbCourse.getSelectedItem();
+        if (selectedId == null) return;
+
+        selectedCourse = findCourseById(selectedId);
+        refreshGradesTable();
+
     }//GEN-LAST:event_cmbCourseActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+        CardSequencePanel.remove(this);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_btnBackActionPerformed
 
 
@@ -225,4 +233,18 @@ public class PerformanceReportJPanel extends javax.swing.JPanel {
         lblClassAvg.setText(String.format("%.2f", avg));
     }
 }
+
+    private Course findCourseById(String courseId) {
+    if (courseId == null) return null;
+
+    CourseDirectory cd = business.getCourseDirectory();
+
+    for (Course c : cd.getCourses()) {
+        if (c.getCourseId() != null && c.getCourseId().equals(courseId)) {
+            return c;
+        }
+    }
+
+    return null;     
+    }
 }

@@ -94,6 +94,11 @@ public class ViewUpdateCourseJPanel extends javax.swing.JPanel {
         });
 
         btnCancel.setText("Cancel");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -161,31 +166,41 @@ public class ViewUpdateCourseJPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
-        String name = txtCourseName.getText().trim();
-        
-        if(name.isEmpty()){
+            // TODO add your handling code here:
+        if (course == null) {
+            JOptionPane.showMessageDialog(this, "Please Select A Course");
+            return;
+        }
+
+        String name = txtCourseName.getText() == null ? "" : txtCourseName.getText().trim();
+        if (name.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Missing Course Name");
             return;
         }
-        
+
+        String creditsText = txtCredits.getText() == null ? "" : txtCredits.getText().trim();
+
         int credits;
-        
-        try{
-            credits = Integer.parseInt(txtCredits.getText());
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(this, "Enter a numerical Value for Credits");
-            
+        try {
+            credits = Integer.parseInt(creditsText);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Enter a numerical value for Credits");
             return;
         }
-        
+
+        if (credits <= 0) {
+            JOptionPane.showMessageDialog(this, "Credits must be greater than 0");
+            return;
+        }
+
         course.setCourseName(name);
         course.setCredits(credits);
-        
+
         JOptionPane.showMessageDialog(this, "Success!");
-        
+
+        populate();
         setEditMode(false);
-        
+
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -193,6 +208,12 @@ public class ViewUpdateCourseJPanel extends javax.swing.JPanel {
         CardSequencePanel.remove(this);
         ((java.awt.CardLayout)CardSequencePanel.getLayout()).next(CardSequencePanel);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        // TODO add your handling code here:
+        populate();
+        setEditMode(false);
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     private void populate() {
         txtCourseId.setText(course.getCourseId());
