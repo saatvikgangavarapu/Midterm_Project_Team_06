@@ -168,23 +168,26 @@ public class AdminRoleWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnRegisterPersonsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterPersonsActionPerformed
         // TODO add your handling code here:
-
-        ManagePersonsJPanel aos = new ManagePersonsJPanel(business, CardSequencePanel);
-
-        CardSequencePanel.add("Manage Persons", aos);
-        ((java.awt.CardLayout) CardSequencePanel.getLayout()).next(CardSequencePanel);
+        UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp.AdminUserAccount panel = new UserInterface.WorkAreas.AdminRole.AdministerUserAccountsWorkResp.AdminUserAccount( business, null, CardSequencePanel, null);
+        CardSequencePanel.add("AdminUserAccountCreateFromRegister", panel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "AdminUserAccountCreateFromRegister");
 
     }//GEN-LAST:event_btnRegisterPersonsActionPerformed
 
     private void btnManageStudentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageStudentsActionPerformed
         // TODO add your handling code here:
-
+        ManagePersonsJPanel panel = new ManagePersonsJPanel(business, CardSequencePanel, "STUDENT");
+        CardSequencePanel.add("ManageStudents", panel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "ManageStudents");
     }//GEN-LAST:event_btnManageStudentsActionPerformed
 
     private void btnAdminProfileIdentifyEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminProfileIdentifyEventsActionPerformed
     }//GEN-LAST:event_btnAdminProfileIdentifyEventsActionPerformed
 
     private void BtnManageFacultyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnManageFacultyActionPerformed
+        ManagePersonsJPanel panel = new ManagePersonsJPanel(business, CardSequencePanel, "FACULTY");
+        CardSequencePanel.add("ManageFaculty", panel);
+        ((java.awt.CardLayout) CardSequencePanel.getLayout()).show(CardSequencePanel, "ManageFaculty");
     }//GEN-LAST:event_BtnManageFacultyActionPerformed
 
 
