@@ -16,9 +16,9 @@ public class CourseDirectory {
     public CourseDirectory(){
         courses = new ArrayList<>();
         
-        courses.add(new Course("INFO5001", "Application and engineer Dev sec spring 2026","", 4));
-        courses.add(new Course("INFO5002", "Software Testing & Development","", 4));
-        
+//            courses.add(new Course("INFO5001", "Application and engineer Dev sec spring 2026","", 4));
+//            courses.add(new Course("INFO5002", "Software Testing & Development","", 4));
+
     }
     
     public ArrayList<Course> getCourses(){
@@ -34,11 +34,14 @@ public class CourseDirectory {
         
     }
     
+    
+    
     public Course findCourseById(String id) {
         for (Course c : courses) {
             if (c.getCourseId().equals(id)) {
                 return c;
             }
+            
         }
         return null;
     }

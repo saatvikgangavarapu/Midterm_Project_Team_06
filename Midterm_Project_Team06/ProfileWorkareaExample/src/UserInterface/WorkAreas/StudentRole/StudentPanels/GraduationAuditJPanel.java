@@ -10,6 +10,8 @@ import Business.Profiles.StudentProfile;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import Business.Enrollment.Enrollment;
+import Business.Enrollment.EnrollmentDirectory;
 
 /**
  *
@@ -20,6 +22,7 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
     Business business;
     StudentProfile student;
     JPanel CardSequencePanel;
+    
 
     /**
      * Creates new form GraduationAuditJPanel
@@ -33,7 +36,30 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
 
         populateCompletedCourses();
     }
-
+    private EnrollmentDirectory getED() {
+    return business.getEnrollmentDirectory();
+    }
+ 
+    private boolean isPassing(double grade) {
+    return grade > 0;  
+    }
+    private int calculateCreditsEarned() {
+        
+        int totalCredits = 8;
+        if (student == null||business == null) return 8;
+        EnrollmentDirectory ed = getED();
+        if (ed == null) return 8;
+        for (Enrollment e : ed.getAllEnrollments()) {
+        if (e.getStudent() ==null) continue;
+        if (!e.getStudent().equals(student)) continue;
+        Course c = e.getCourse();
+        if (c == null) continue;
+        if (isPassing(e.getGrade())) {
+        totalCredits += c.getCredits();
+                }
+            }
+        return totalCredits;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -171,7 +197,10 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
             for (Course course : student.getEnrolledCourses()) {
 
                 String grade = course.getGrade();
-
+                
+                if (grade != null &&! grade.equals("F")) { 
+                    totalCredits += course.getCredits();
+                }
                 if (grade != null && !grade.equals("F")) {
                     totalCredits += course.getCredits();
                 }
@@ -198,31 +227,31 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void populateCompletedCourses() {
-
         DefaultTableModel model = (DefaultTableModel) tblCompletedCourses.getModel();
-
         model.setRowCount(0);
+        model.setColumnIdentifiers(new String[]{"Course ID", "Course Name", "Credits", "Grade"});
 
-        model.setColumnIdentifiers(new String[]{
-            "Course ID", "Course Name", "Credits", "Grade"
-        });
+        if (student == null || business == null) return;
 
-        if (student == null || student.getEnrolledCourses() == null) {
-            return;
-        }
+        EnrollmentDirectory ed = getED();
+        if (ed == null) return;
 
-        for (Course course : student.getEnrolledCourses()) {
+        for (Enrollment e : ed.getAllEnrollments()) {
+            if (e.getStudent() == null) continue;
 
-            String grade = course.getGrade();
+            if (!e.getStudent().equals(student)) continue;
 
-            // Only completed (passed) courses
-            if (grade != null && !grade.equals("F")) {
+            Course c = e.getCourse();
+            if (c == null) continue;
 
+            double g = e.getGrade();
+
+            if (isPassing(g)) {
                 model.addRow(new Object[]{
-                    course.getCourseId(),
-                    course.getCourseName(),
-                    course.getCredits(),
-                    grade
+                    c.getCourseId(),
+                    c.getCourseName(),
+                    c.getCredits(),
+                    g
                 });
             }
         }

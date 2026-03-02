@@ -15,14 +15,15 @@ public class Course {
     private int credits;
     private String grade;
     private String facultyId;
-
-    public Course(String courseId, String courseName, String grade, int credits) {
+    
+    
+    public Course(String courseId, String courseName, int credits, String facultyId) {
         this.courseId = courseId;
         this.courseName = courseName;
-        this.grade = grade;
         this.credits = credits;
-
+        this.facultyId = facultyId;
     }
+ 
 
     /**
      * Creates a Course object.
@@ -32,13 +33,15 @@ public class Course {
      * @param credits number of credits assigned to the course
      * @param facultyId faculty assigned to teach the course
      */
-    public Course(String courseId, String courseName, int credits, String facultyId) {
+
+   public Course(String courseId, String courseName, String grade, int credits) {
         this.courseId = courseId;
         this.courseName = courseName;
+        this.grade = grade;
         this.credits = credits;
-        this.facultyId = facultyId;
+        
     }
-
+   
     public String getGrade() {
         return grade;
     }
@@ -65,6 +68,11 @@ public class Course {
     }
 
     public void setCredits() {
+        this.credits = credits;
+    }
+    
+    public void setCredits(int credits) {
+    
         this.credits = credits;
     }
 
