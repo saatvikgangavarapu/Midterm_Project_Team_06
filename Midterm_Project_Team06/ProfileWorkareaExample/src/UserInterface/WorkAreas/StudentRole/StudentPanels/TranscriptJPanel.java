@@ -5,15 +5,19 @@
 package UserInterface.WorkAreas.StudentRole.StudentPanels;
 
 import Business.Business;
+import Business.Courses.Course;
 import Business.Profiles.StudentProfile;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author DELL
+ * @author Tanvi Modi
  */
 public class TranscriptJPanel extends javax.swing.JPanel {
-    
+
     Business business;
     StudentProfile student;
     JPanel CardSequencePanel;
@@ -26,6 +30,8 @@ public class TranscriptJPanel extends javax.swing.JPanel {
         this.business = business;
         this.CardSequencePanel = CardSequencePanel;
         this.student = student;
+
+        populateTranscriptTable();
     }
 
     /**
@@ -60,8 +66,18 @@ public class TranscriptJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblTranscript);
 
         btnPrint.setText("Print");
+        btnPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintActionPerformed(evt);
+            }
+        });
 
         btnBack.setText("Back<<<");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -98,6 +114,23 @@ public class TranscriptJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        CardSequencePanel.remove(this);
+        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
+        // TODO add your handling code here:
+
+        double gpa = calculateGPA();
+
+        JOptionPane.showMessageDialog(this,
+                "Transcript Printed Successfully!\n\nGPA: " + String.format("%.2f", gpa),
+                "Official Transcript",
+                JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnPrintActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
@@ -106,4 +139,76 @@ public class TranscriptJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblTranscript;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTranscriptTable() {
+
+        DefaultTableModel model = (DefaultTableModel) tblTranscript.getModel();
+        model.setRowCount(0);
+
+        model.setColumnIdentifiers(new String[]{
+            "Course ID", "Course Name", "Credits", "Grade"
+        });
+
+        if (student == null || student.getEnrolledCourses() == null) {
+            return;
+        }
+
+        for (Course course : student.getEnrolledCourses()) {
+
+            String grade = course.getGrade();
+            if (grade == null) {
+                grade = "NA";
+            }
+
+            model.addRow(new Object[]{
+                course.getCourseId(),
+                course.getCourseName(),
+                course.getCredits(),
+                grade
+            });
+        }
+    }
+
+    private double convertGradeToPoint(String grade) {
+
+        switch (grade) {
+            case "A":
+                return 4.0;
+            case "B":
+                return 3.0;
+            case "C":
+                return 2.0;
+            case "D":
+                return 1.0;
+            case "F":
+                return 0.0;
+            default:
+                return 0.0;
+        }
+    }
+
+    private double calculateGPA() {
+
+        double totalPoints = 0;
+        int totalCredits = 0;
+
+        for (Course course : student.getEnrolledCourses()) {
+
+            String grade = course.getGrade();
+
+            if (grade != null) {
+
+                double gradePoint = convertGradeToPoint(grade);
+
+                totalPoints += gradePoint * course.getCredits();
+                totalCredits += course.getCredits();
+            }
+        }
+
+        if (totalCredits == 0) {
+            return 0;
+        }
+
+        return totalPoints / totalCredits;
+    }
 }

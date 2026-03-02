@@ -14,6 +14,7 @@ import Business.UserAccounts.UserAccountDirectory;
 import Business.Courses.CourseDirectory;
 
 import Business.Enrollment.EnrollmentDirectory;
+import Business.Profiles.FacultyDirectory;
 import Business.StudentProf.StudentProfDirectory;
 
 /**
@@ -22,62 +23,64 @@ import Business.StudentProf.StudentProfDirectory;
  */
 public class Business {
 
-    String name;
-    PersonDirectory persondirectory; //all people profiles regardless of the role
+     String name;
 
+    PersonDirectory persondirectory;
     EmployeeDirectory employeedirectory;
     UserAccountDirectory useraccountdirectory;
     StudentDirectory studentdirectory;
-    
+    FacultyDirectory facultydirectory;
+
     CourseDirectory courseDirectory;
-    
     EnrollmentDirectory enrollmentDirectory;
-    
     StudentProfDirectory studentProfDirectory;
-    
     
 
 
     public Business(String n) {
-        name = n;
+         name = n;
 
         persondirectory = new PersonDirectory();
         employeedirectory = new EmployeeDirectory(this);
         useraccountdirectory = new UserAccountDirectory();
         studentdirectory = new StudentDirectory();
+        facultydirectory = new FacultyDirectory();
+
         courseDirectory = new CourseDirectory();
         enrollmentDirectory = new EnrollmentDirectory();
         studentProfDirectory = new StudentProfDirectory();
-
-
+        
     }
 
     public PersonDirectory getPersonDirectory() {
         return persondirectory;
     }
 
-    public UserAccountDirectory getUserAccountDirectory() {
-        return useraccountdirectory;
-    }
-
-
     public EmployeeDirectory getEmployeeDirectory() {
         return employeedirectory;
     }
 
-    public StudentDirectory getStudentDirectory(){
+    public UserAccountDirectory getUserAccountDirectory() {
+        return useraccountdirectory;
+    }
+
+    public StudentDirectory getStudentDirectory() {
         return studentdirectory;
     }
-    
-    public CourseDirectory getCourseDirectory(){
+
+    public FacultyDirectory getFacultyDirectory() {
+        return facultydirectory;
+    }
+
+    public CourseDirectory getCourseDirectory() {
         return courseDirectory;
     }
-    
-    public EnrollmentDirectory getEnrollmentDirectory(){
+
+    public EnrollmentDirectory getEnrollmentDirectory() {
         return enrollmentDirectory;
     }
-    
-    public StudentProfDirectory getStudentProfDirectory(){
+
+    public StudentProfDirectory getStudentProfDirectory() {
         return studentProfDirectory;
     }
 

@@ -4,20 +4,23 @@
  * and open the template in the editor.
  */
 package Business.Profiles;
-
+import Business.Courses.Course;
 import Business.Person.Person;
+import java.util.ArrayList;
 
 /**
  *
  * @author kal bugrara
  */
 public class StudentProfile extends Profile {
-    
+
+    private ArrayList<Course> enrolledCourses;
+
 //    Transcript transcript;
     //   EmploymentHistroy employmenthistory;
-
     public StudentProfile(Person p) {
         super(p);
+        enrolledCourses = new ArrayList<>();
 
 //        transcript = new Transcript(this);
 //        employmenthistory = new EmploymentHistroy();
@@ -32,4 +35,18 @@ public class StudentProfile extends Profile {
         return getPerson() != null && getPerson().getPersonId() != null && getPerson().getPersonId().equals(id);
     }
 
+    // Add Course
+    public void enrollCourse(Course c) {
+        enrolledCourses.add(c);
+    }
+
+    // Remove Course
+    public void dropCourse(Course c) {
+        enrolledCourses.remove(c);
+    }
+
+    // Get Courses
+    public ArrayList<Course> getEnrolledCourses() {
+        return enrolledCourses;
+    }
 }

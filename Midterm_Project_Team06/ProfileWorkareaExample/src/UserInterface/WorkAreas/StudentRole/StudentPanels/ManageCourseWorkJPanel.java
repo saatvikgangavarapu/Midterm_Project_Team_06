@@ -5,12 +5,14 @@
 package UserInterface.WorkAreas.StudentRole.StudentPanels;
 
 import Business.Business;
+import Business.Courses.Course;
 import Business.Profiles.StudentProfile;
+import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 /**
  *
- * @author DELL
+ * @author Tanvi Modi
  */
 public class ManageCourseWorkJPanel extends javax.swing.JPanel {
 
@@ -23,10 +25,12 @@ public class ManageCourseWorkJPanel extends javax.swing.JPanel {
      */
     public ManageCourseWorkJPanel(Business business, StudentProfile student, JPanel CardSequencePanel) {
         initComponents();
-        
+
         this.business = business;
         this.CardSequencePanel = CardSequencePanel;
         this.student = student;
+
+        populateTable();
     }
 
     /**
@@ -61,8 +65,18 @@ public class ManageCourseWorkJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblCourses);
 
         btnView.setText("View");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
 
         btnBack.setText("Back<<<");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -99,6 +113,30 @@ public class ManageCourseWorkJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        CardSequencePanel.remove(this);
+        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        // TODO add your handling code here:
+
+        int selectedRow = tblCourses.getSelectedRow();
+
+        if (selectedRow < 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Select a course first!");
+            return;
+        }
+
+        Course selectedCourse = student.getEnrolledCourses().get(selectedRow);
+
+        javax.swing.JOptionPane.showMessageDialog(this,
+                "Course: " + selectedCourse.getCourseName()
+                + "\nCredits: " + selectedCourse.getCredits()
+                + "\nGrade: " + selectedCourse.getGrade());
+    }//GEN-LAST:event_btnViewActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
@@ -107,4 +145,27 @@ public class ManageCourseWorkJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblCourses;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+
+        javax.swing.table.DefaultTableModel model
+                = (javax.swing.table.DefaultTableModel) tblCourses.getModel();
+
+        model.setRowCount(0);
+
+        model.setColumnIdentifiers(new String[]{
+            "Course ID", "Course Name", "Credits", "Grade"
+        });
+
+        for (Course course : student.getEnrolledCourses()) {
+
+            Object[] row = new Object[4];
+            row[0] = course.getCourseId();
+            row[1] = course.getCourseName();
+            row[2] = course.getCredits();
+            row[3] = course.getGrade();
+
+            model.addRow(row);
+        }
+    }
 }

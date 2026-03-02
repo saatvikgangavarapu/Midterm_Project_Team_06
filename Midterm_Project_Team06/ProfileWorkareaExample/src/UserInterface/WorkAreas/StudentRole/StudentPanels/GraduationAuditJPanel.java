@@ -5,15 +5,18 @@
 package UserInterface.WorkAreas.StudentRole.StudentPanels;
 
 import Business.Business;
+import Business.Courses.Course;
 import Business.Profiles.StudentProfile;
+import java.awt.CardLayout;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author DELL
+ * @author Tanvi Modi
  */
 public class GraduationAuditJPanel extends javax.swing.JPanel {
-    
+
     Business business;
     StudentProfile student;
     JPanel CardSequencePanel;
@@ -23,10 +26,12 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
      */
     public GraduationAuditJPanel(Business business, StudentProfile student, JPanel CardSequencePanel) {
         initComponents();
-        
+
         this.business = business;
         this.CardSequencePanel = CardSequencePanel;
         this.student = student;
+
+        populateCompletedCourses();
     }
 
     /**
@@ -38,17 +43,17 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCompletedCourses = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
+        txtTotalCreditsEarned = new javax.swing.JTextField();
+        txtGraduationStatus = new javax.swing.JTextField();
+        btnCreditsEarned = new javax.swing.JButton();
+        btnGraduationStatus = new javax.swing.JButton();
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel1.setText("Graduation Audit");
+        lblTitle.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblTitle.setText("Graduation Audit");
 
         tblCompletedCourses.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -63,17 +68,26 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tblCompletedCourses);
 
-        jLabel2.setText("Total Credits earned ");
-
-        jLabel3.setText("Graduation Status");
-
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBack.setText("Back<<<");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBackActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Back<<<");
+        btnCreditsEarned.setText("Total Credits Earned");
+        btnCreditsEarned.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreditsEarnedActionPerformed(evt);
+            }
+        });
+
+        btnGraduationStatus.setText("Graduation Status");
+        btnGraduationStatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGraduationStatusActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -81,59 +95,136 @@ public class GraduationAuditJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3)
+                    .addComponent(btnBack)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(254, 254, 254)
-                            .addComponent(jLabel1))
+                            .addComponent(lblTitle))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(118, 118, 118)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(201, 201, 201)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel3))
-                            .addGap(70, 70, 70)
+                            .addGap(217, 217, 217)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnCreditsEarned)
+                                .addComponent(btnGraduationStatus))
+                            .addGap(87, 87, 87)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)))))
-                .addContainerGap(284, Short.MAX_VALUE))
+                                .addComponent(txtTotalCreditsEarned)
+                                .addComponent(txtGraduationStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)))))
+                .addContainerGap(261, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addComponent(jLabel1)
+                .addComponent(lblTitle)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addGap(39, 39, 39)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTotalCreditsEarned, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCreditsEarned))
+                .addGap(36, 36, 36)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtGraduationStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGraduationStatus))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addComponent(btnBack)
                 .addGap(64, 64, 64))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        CardSequencePanel.remove(this);
+        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnCreditsEarnedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreditsEarnedActionPerformed
+        // TODO add your handling code here:
+
+        int totalCredits = 0;
+
+        if (student != null && student.getEnrolledCourses() != null) {
+
+            for (Course course : student.getEnrolledCourses()) {
+
+                String grade = course.getGrade();
+
+                if (grade != null && !grade.equals("F")) {
+                    totalCredits += course.getCredits();
+                }
+            }
+        }
+
+        txtTotalCreditsEarned.setText(String.valueOf(totalCredits));
+    }//GEN-LAST:event_btnCreditsEarnedActionPerformed
+
+    private void btnGraduationStatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraduationStatusActionPerformed
+        // TODO add your handling code here:
+
+        int totalCredits = 0;
+
+        if (student != null && student.getEnrolledCourses() != null) {
+
+            for (Course course : student.getEnrolledCourses()) {
+
+                String grade = course.getGrade();
+
+                if (grade != null && !grade.equals("F")) {
+                    totalCredits += course.getCredits();
+                }
+            }
+        }
+
+        if (totalCredits >= 120) {
+            txtGraduationStatus.setText("Eligible for Graduation");
+        } else {
+            txtGraduationStatus.setText("Not Eligible for Graduation");
+        }
+    }//GEN-LAST:event_btnGraduationStatusActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JButton btnBack;
+    private javax.swing.JButton btnCreditsEarned;
+    private javax.swing.JButton btnGraduationStatus;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblCompletedCourses;
+    private javax.swing.JTextField txtGraduationStatus;
+    private javax.swing.JTextField txtTotalCreditsEarned;
     // End of variables declaration//GEN-END:variables
+
+    private void populateCompletedCourses() {
+
+        DefaultTableModel model = (DefaultTableModel) tblCompletedCourses.getModel();
+
+        model.setRowCount(0);
+
+        model.setColumnIdentifiers(new String[]{
+            "Course ID", "Course Name", "Credits", "Grade"
+        });
+
+        if (student == null || student.getEnrolledCourses() == null) {
+            return;
+        }
+
+        for (Course course : student.getEnrolledCourses()) {
+
+            String grade = course.getGrade();
+
+            // Only completed (passed) courses
+            if (grade != null && !grade.equals("F")) {
+
+                model.addRow(new Object[]{
+                    course.getCourseId(),
+                    course.getCourseName(),
+                    course.getCredits(),
+                    grade
+                });
+            }
+        }
+    }
 }

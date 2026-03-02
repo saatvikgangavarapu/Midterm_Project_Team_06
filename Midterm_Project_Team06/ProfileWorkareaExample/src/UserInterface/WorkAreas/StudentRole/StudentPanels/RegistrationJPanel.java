@@ -5,15 +5,18 @@
 package UserInterface.WorkAreas.StudentRole.StudentPanels;
 
 import Business.Business;
+import Business.Courses.Course;
 import Business.Profiles.StudentProfile;
+import java.awt.CardLayout;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author DELL
+ * @author Tanvi Modi
  */
 public class RegistrationJPanel extends javax.swing.JPanel {
-    
+
     Business business;
     StudentProfile student;
     JPanel CardSequencePanel;
@@ -26,6 +29,8 @@ public class RegistrationJPanel extends javax.swing.JPanel {
         this.business = business;
         this.CardSequencePanel = CardSequencePanel;
         this.student = student;
+
+        populateTable();
     }
 
     /**
@@ -61,10 +66,25 @@ public class RegistrationJPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblAvailableCourses);
 
         btnEnroll.setText("Enroll ");
+        btnEnroll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnrollActionPerformed(evt);
+            }
+        });
 
         btnDrop.setText("Drop");
+        btnDrop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDropActionPerformed(evt);
+            }
+        });
 
         btnBack.setText("Back<<<");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -103,6 +123,73 @@ public class RegistrationJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+        CardSequencePanel.remove(this);
+        ((CardLayout) CardSequencePanel.getLayout()).previous(CardSequencePanel);
+    }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
+        // TODO add your handling code here:
+
+        int selectedRow = tblAvailableCourses.getSelectedRow();
+
+        if (selectedRow < 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please select a course.");
+            return;
+        }
+
+        String courseId = tblAvailableCourses.getValueAt(selectedRow, 0).toString();
+
+        Course selectedCourse
+                = business.getCourseDirectory().findCourseById(courseId);
+
+        if (selectedCourse == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Course not found.");
+            return;
+        }
+
+        // Check duplicate
+        if (student.getEnrolledCourses().contains(selectedCourse)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "You are already enrolled in this course.");
+            return;
+        }
+
+        student.enrollCourse(selectedCourse);
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Course enrolled successfully!");
+
+        populateTable(); // refresh
+
+    }//GEN-LAST:event_btnEnrollActionPerformed
+
+    private void btnDropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDropActionPerformed
+        // TODO add your handling code here:
+
+        int selectedRow = tblAvailableCourses.getSelectedRow();
+
+        if (selectedRow < 0) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Please select a course.");
+            return;
+        }
+
+        String courseId = tblAvailableCourses.getValueAt(selectedRow, 0).toString();
+
+        Course selectedCourse
+                = business.getCourseDirectory().findCourseById(courseId);
+
+        if (!student.getEnrolledCourses().contains(selectedCourse)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "You are not enrolled in this course.");
+            return;
+        }
+
+        student.dropCourse(selectedCourse);
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Course dropped successfully!");
+
+        populateTable(); // refresh
+    }//GEN-LAST:event_btnDropActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
@@ -112,4 +199,26 @@ public class RegistrationJPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblAvailableCourses;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable() {
+
+        DefaultTableModel model
+                = (DefaultTableModel) tblAvailableCourses.getModel();
+
+        model.setRowCount(0);
+
+        model.setColumnIdentifiers(new String[]{
+            "Course ID", "Course Name", "Credits"
+        });
+
+        for (Course course : business.getCourseDirectory().getCourses()) {
+
+            Object[] row = new Object[3];
+            row[0] = course.getCourseId();
+            row[1] = course.getCourseName();
+            row[2] = course.getCredits();
+
+            model.addRow(row);
+        }
+    }
 }
