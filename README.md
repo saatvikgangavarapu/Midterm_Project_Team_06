@@ -20,5 +20,13 @@ Administrators can log in to their account and access the Admin Dashboard, which
 ### Student Usecase:
 The Student role allows users to manage coursework (enroll and drop classes), access academic records, tell them their eligibility for graduation, review transcripts, and track accumulated credits towards a completed degree.
 
-### Challenges and Solutions:
+## Authentication:
+We've made it so that each user can login and only see their profile. This allows for security and separation of tasks. Additionally, if the password is wrong, they won't be able to login. 
+
+## Challenges and Solutions:
 One of our biggest challeges was using committing and merging our code. To overcome these challenges we video called so that we could make sure that we were not breaking anything. Next time, I think that if we did that from the beginning that it will go a lot smoother.
+
+## Future Improvements
+In the future, we can implement more users and improve the features for of the users as well. For example we can implement the transcript view for students. Additionally, we can add a common home page for all the users where they can get access to university wide news and alerts. Additonally, for authentication, we can implement a multi-factor authentication access which allows for more security. Another feature we can add is a waitlist to see how many students are waiting for the course before the student can get into the course. 
+
+
