@@ -27,10 +27,10 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
     private UserAccount selecteduseraccount;
     
     
-    public ManagePersonsJPanel(Business bz, JPanel jp) {
+    public ManagePersonsJPanel(Business bz, JPanel jp, String modeParam) {
         this.CardSequencePanel = jp;
         this.business = bz;
-        this.mode = (mode == null) ? "" : mode.trim().toUpperCase();
+        this.mode = (modeParam == null) ? "" : modeParam.trim().toUpperCase();
         initComponents();
         configureHeader();
         refreshTable();
@@ -51,11 +51,10 @@ public class ManagePersonsJPanel extends javax.swing.JPanel {
         for (UserAccount ua : business.getUserAccountDirectory().getUserAccountList()) {
             String role = ua.getRole();
 
-            if ("Admin".equalsIgnoreCase(role)) continue;
+            if (role.equalsIgnoreCase("Admin") || role.toLowerCase().contains("admin")) continue;
 
-            if ("FACULTY".equals(mode) && !"Faculty".equalsIgnoreCase(role)) continue;
-            if ("STUDENT".equals(mode) && !"Student".equalsIgnoreCase(role)) continue;
-
+            if ("FACULTY".equals(mode) && !role.toLowerCase().contains("faculty")) continue;
+            if ("STUDENT".equals(mode) && !role.toLowerCase().contains("student")) continue;
             Object[] row = new Object[3];
             row[0] = ua;
             row[1] = role;
